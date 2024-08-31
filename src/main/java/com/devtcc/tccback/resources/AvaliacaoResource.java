@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devtcc.tccback.entities.Usuario;
-import com.devtcc.tccback.services.UsuarioService;
+import com.devtcc.tccback.entities.Avaliacao;
+import com.devtcc.tccback.services.AvaliacaoService;
 
 @RestController
-@RequestMapping(value = "/usuario")
-public class UsuarioResource {
+@RequestMapping(value = "/avaliacao")
+public class AvaliacaoResource {
 	
 	@Autowired
-	private UsuarioService service;
+	private AvaliacaoService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Usuario>> findAll(){
-		List<Usuario> list = service.findAll();
+	public ResponseEntity<List<Avaliacao>> findAll(){
+		List<Avaliacao> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Usuario> findById(@PathVariable Long id){
-		Usuario usuario = service.findById(id);
-		return ResponseEntity.ok().body(usuario);
+	public ResponseEntity<Avaliacao> findById(@PathVariable Long id){
+		Avaliacao avaliacao = service.findById(id);
+		return ResponseEntity.ok().body(avaliacao);
 	}	
 }

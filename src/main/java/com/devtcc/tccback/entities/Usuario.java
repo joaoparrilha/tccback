@@ -1,12 +1,17 @@
 package com.devtcc.tccback.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -27,14 +32,19 @@ public class Usuario implements Serializable {
 	private String email;
 	private String senha;
 	private String telefone;
-	private Integer status;
+	private String status;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "usuario")
+	private List<Ativo> ativos = new ArrayList<>();
+	
 	
 	public Usuario() {
 		
 	}
 	
 	public Usuario(Long id, String nome, String matricula, String email, String senha, String telefone,
-			Integer status) {
+			String status) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -93,12 +103,16 @@ public class Usuario implements Serializable {
 		this.telefone = telefone;
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public List<Ativo> getAtivos() {
+		return ativos;
 	}
 
 	@Override
@@ -123,6 +137,8 @@ public class Usuario implements Serializable {
 		return "Usuario [id=" + id + ", nome=" + nome + ", matricula=" + matricula + ", email=" + email + ", senha="
 				+ senha + ", telefone=" + telefone + ", status=" + status + "]";
 	}
+
+	
 	
 	
 	
