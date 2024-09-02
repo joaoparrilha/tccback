@@ -39,6 +39,12 @@ public class AtivoResource {
 		return ResponseEntity.ok().body(usuario);
 	}	
 	
+	@GetMapping("/validar")
+	public ResponseEntity<List<Ativo>> findByValidacaoFalse(){
+		List<Ativo> list = service.findValidacao();
+		return ResponseEntity.ok().body(list);
+	}
+	
 	@PostMapping
 	public ResponseEntity<Ativo> insert(@RequestBody Ativo obj){
 		obj = service.insert(obj);
