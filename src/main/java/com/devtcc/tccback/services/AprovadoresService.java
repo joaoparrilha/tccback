@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.devtcc.tccback.entities.Aprovadores;
+import com.devtcc.tccback.entities.Usuario;
 import com.devtcc.tccback.repositories.AprovadoresRepository;
 
 @Service
@@ -52,4 +53,5 @@ public class AprovadoresService {
 			entity.setChecklist(obj.getChecklist());
 		}
 	}
+	
 }

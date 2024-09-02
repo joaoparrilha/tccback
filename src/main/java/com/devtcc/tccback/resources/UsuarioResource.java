@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import com.devtcc.tccback.services.UsuarioService;
 
 @RestController
 @RequestMapping(value = "/usuario")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UsuarioResource {
 	
 	@Autowired
@@ -55,6 +57,17 @@ public class UsuarioResource {
 	public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario obj){
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
+	}
+	
+	@PostMapping("/validacao")
+	public ResponseEntity<String> login(@RequestBody Usuario obj){
+		try {
+            Usuario usuario = service.login(obj.getEmail(), obj.getSenha());
+            String retorno = "Sucess";
+            return ResponseEntity.ok().body(retorno);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(401).body(null); // Status 401 Unauthorized
+        }
 	}
 	
 }

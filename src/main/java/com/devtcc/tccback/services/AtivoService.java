@@ -1,5 +1,8 @@
 package com.devtcc.tccback.services;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +28,10 @@ public class AtivoService {
 	}
 	
 	public Ativo insert(Ativo obj) {
+		
+		LocalDate localDate = LocalDate.now();
+		Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		obj.setCriado(date);
 		return repo.save(obj);
 	}
 	

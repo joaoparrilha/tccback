@@ -68,4 +68,18 @@ public class UsuarioService {
 			entity.setStatus(obj.getStatus());
 		}	
 	}
+	
+	public Usuario login(String email, String senha){
+		Optional<Usuario> usuario = repo.findByEmail(email);
+		if(usuario.isPresent() && usuario.get().getSenha().equals(senha)) {
+			if("administrador".equals(usuario.get().getStatus()) || "validador".equals(usuario.get().getStatus())) {
+				return usuario.get();
+			}else {
+				 throw new RuntimeException("Usuário inválido");
+			}
+		}else {
+			 throw new RuntimeException("Email ou senha inválidos");
+		}
+	}
+	
 }
