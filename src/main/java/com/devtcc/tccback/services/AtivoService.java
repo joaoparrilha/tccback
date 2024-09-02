@@ -23,4 +23,69 @@ public class AtivoService {
 		Optional<Ativo> usuario = repo.findById(id);
 		return usuario.get();
 	}
+	
+	public Ativo insert(Ativo obj) {
+		return repo.save(obj);
+	}
+	
+	public void delete(Long id) {
+		repo.deleteById(id);
+	}
+	
+	public Ativo update(Long id, Ativo obj){
+		Ativo entity = repo.getReferenceById(id);
+		updateData(entity, obj);
+		return repo.save(entity);
+	}
+
+	private void updateData(Ativo entity, Ativo obj) {
+		
+		if(obj.getId() != null) {
+			entity.setId(obj.getId());
+		}
+		
+		if(obj.getNome() != null) {
+			entity.setNome(obj.getNome());
+		}
+		
+		if(obj.getDescricao() != null) {
+			entity.setDescricao(obj.getDescricao());
+		}
+		
+		if(obj.getTipo() != null) {
+			entity.setTipo(obj.getTipo());
+		}
+		
+		if(obj.getDominio() != null) {
+			entity.setDominio(obj.getDominio());
+		}
+		
+		if(obj.getDominio() != null) {
+			entity.setDominio(obj.getDominio());
+		}
+		
+		if(obj.getCriado() != null) {
+			entity.setCriado(obj.getCriado());
+		}
+		
+		if(obj.getVersao() != null) {
+			entity.setVersao(obj.getVersao());
+		}
+		
+		if(obj.getDownload() != null) {
+			entity.setDownload(obj.getDownload());
+		}
+		
+		if(obj.getValidacao() != null) {
+			entity.setValidacao(obj.getValidacao());
+		}
+		
+		if(obj.getArquivo() != null) {
+			entity.setArquivo(obj.getArquivo());
+		}
+		
+		if(obj.getUsuario() != null) {
+			entity.setUsuario(obj.getUsuario());
+		}
+	}
 }

@@ -23,4 +23,49 @@ public class UsuarioService {
 		Optional<Usuario> usuario = repo.findById(id);
 		return usuario.get();
 	}
+	
+	public Usuario insert(Usuario obj) {
+		return repo.save(obj);
+	}
+	
+	public void delete(Long id) {
+		repo.deleteById(id);
+	}
+	
+	public Usuario update(Long id, Usuario obj){
+		Usuario entity = repo.getReferenceById(id);
+		updateData(entity, obj);
+		return repo.save(entity);
+	}
+
+	private void updateData(Usuario entity, Usuario obj) {
+		
+		if(obj.getId() != null) {
+			entity.setId(obj.getId());
+		}
+		
+		if(obj.getNome() != null) {
+			entity.setNome(obj.getNome());
+		}
+		
+		if(obj.getMatricula() != null) {
+			entity.setMatricula(obj.getMatricula());
+		}
+		
+		if(obj.getEmail() != null) {
+			entity.setEmail(obj.getEmail());
+		}
+		
+		if(obj.getSenha() != null) {
+			entity.setSenha(obj.getSenha());
+		}
+		
+		if(obj.getTelefone() != null) {
+			entity.setTelefone(obj.getTelefone());
+		}
+		
+		if(obj.getTelefone() != null) {
+			entity.setStatus(obj.getStatus());
+		}	
+	}
 }

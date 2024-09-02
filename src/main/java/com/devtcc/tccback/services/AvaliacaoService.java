@@ -23,4 +23,33 @@ public class AvaliacaoService {
 		Optional<Avaliacao> avaliacao = repo.findById(id);
 		return avaliacao.get();
 	}
+	
+	public Avaliacao insert(Avaliacao obj) {
+		return repo.save(obj);
+	}
+	
+	public void delete(Long id) {
+		repo.deleteById(id);
+	}
+	
+	public Avaliacao update(Long id, Avaliacao obj){
+		Avaliacao entity = repo.getReferenceById(id);
+		updateData(entity, obj);
+		return repo.save(entity);
+	}
+
+	private void updateData(Avaliacao entity, Avaliacao obj) {
+		
+		if(obj.getId() != null) {
+			entity.setId(obj.getId());
+		}
+		
+		if(obj.getAvaliacao() != null) {
+			entity.setAvaliacao(obj.getAvaliacao());
+		}
+		
+		if(obj.getComentario() != null) {
+			entity.setComentario(obj.getComentario());
+		}		
+	}
 }

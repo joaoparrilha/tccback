@@ -15,8 +15,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Table
+@AllArgsConstructor
+@NoArgsConstructor
 public class Ativo implements Serializable{
 
 	private static final long serialVersionUID = 1L;

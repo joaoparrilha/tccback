@@ -3,6 +3,8 @@ package com.devtcc.tccback.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "Aprovadores")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Aprovador implements Serializable {
+public class Aprovadores implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -30,13 +32,16 @@ public class Aprovador implements Serializable {
 	@JoinColumn(name = "fk_Usuario_id")
 	private Usuario usuario;
 	
-	//private Checklist checklist;
+	@ManyToOne
+	@JoinColumn(name = "fk_Checklist_id")
+	@JsonIgnore
+	private Checklist checklist;
 	
-	public Aprovador (){
+	public Aprovadores (){
 		
 	}
 
-	public Aprovador(Long id, String aprovador, Usuario usuario) {
+	public Aprovadores(Long id, String aprovador, Usuario usuario) {
 		super();
 		this.id = id;
 		this.aprovador = aprovador;
@@ -62,6 +67,14 @@ public class Aprovador implements Serializable {
 	public Usuario getUsuario() {
 		return usuario;
 	}
+	
+	public Checklist getChecklist() {
+		return checklist;
+	}
+
+	public void setChecklist(Checklist checklist) {
+		this.checklist = checklist;
+	}
 
 	@Override
 	public int hashCode() {
@@ -76,7 +89,7 @@ public class Aprovador implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Aprovador other = (Aprovador) obj;
+		Aprovadores other = (Aprovadores) obj;
 		return Objects.equals(id, other.id);
 	}
 	

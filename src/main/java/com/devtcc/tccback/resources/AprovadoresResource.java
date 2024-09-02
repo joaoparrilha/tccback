@@ -15,30 +15,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.devtcc.tccback.entities.Usuario;
-import com.devtcc.tccback.services.UsuarioService;
+import com.devtcc.tccback.entities.Aprovadores;
+import com.devtcc.tccback.services.AprovadoresService;
 
 @RestController
-@RequestMapping(value = "/usuario")
-public class UsuarioResource {
+@RequestMapping(value = "/aprovador")
+public class AprovadoresResource {
 	
 	@Autowired
-	private UsuarioService service;
+	private AprovadoresService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Usuario>> findAll(){
-		List<Usuario> list = service.findAll();
+	public ResponseEntity<List<Aprovadores>> findAll(){
+		List<Aprovadores> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Usuario> findById(@PathVariable Long id){
-		Usuario usuario = service.findById(id);
-		return ResponseEntity.ok().body(usuario);
+	public ResponseEntity<Aprovadores> findById(@PathVariable Long id){
+		Aprovadores aprovador = service.findById(id);
+		return ResponseEntity.ok().body(aprovador);
 	}	
 	
 	@PostMapping
-	public ResponseEntity<Usuario> insert(@RequestBody Usuario obj){
+	public ResponseEntity<Aprovadores> insert(@RequestBody Aprovadores obj){
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
@@ -50,11 +50,9 @@ public class UsuarioResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario obj){
+	public ResponseEntity<Aprovadores> update(@PathVariable Long id, @RequestBody Aprovadores obj){
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
-	
 }
