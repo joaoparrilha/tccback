@@ -1,5 +1,6 @@
 package com.devtcc.tccback.resources;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.devtcc.tccback.entities.Ativo;
@@ -45,11 +48,25 @@ public class AtivoResource {
 		return ResponseEntity.ok().body(list);
 	}
 	
+	//@PostMapping
+	//public ResponseEntity<Ativo> insert(@RequestBody Ativo obj){
+	//	obj = service.insert(obj);
+	//	URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+	//	return ResponseEntity.created(uri).body(obj);
+	//}
+	
 	@PostMapping
-	public ResponseEntity<Ativo> insert(@RequestBody Ativo obj){
-		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+	public ResponseEntity<Ativo> insert(@RequestBody Ativo obj, @RequestParam("arquivo") MultipartFile file){
+		try {
+			obj.setArquivo(file.getBytes());
+			obj = service.insert(obj);
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+			return ResponseEntity.created(uri).body(obj);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			return ResponseEntity.status(500).build();
+		}
 	}
 	
 	@DeleteMapping(value = "/{id}")

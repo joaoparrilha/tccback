@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -40,6 +41,8 @@ public class Ativo implements Serializable{
 	private Float versao;
 	private Integer download;
 	private Boolean validacao;
+	
+	@Lob
 	private byte[] arquivo;
 	
 	@ManyToOne

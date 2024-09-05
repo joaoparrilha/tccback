@@ -9,11 +9,12 @@ public class WebConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/usuario")
+		registry.addMapping("/*")
 		.allowedOrigins("http://localhost:3000")
-		.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
+		.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+		.allowedHeaders("*");
 		
-		registry.addMapping("/ativo")
+		/*registry.addMapping("/ativo")
 		.allowedOrigins("http://localhost:3000")
 		.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
 		
@@ -28,5 +29,9 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addMapping("/checklist")
 		.allowedOrigins("http://localhost:3000")
 		.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
+		
+		registry.addMapping("/usuario/validacao")
+		.allowedOrigins("http://localhost:3000")
+		.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");*/
 	}
 }

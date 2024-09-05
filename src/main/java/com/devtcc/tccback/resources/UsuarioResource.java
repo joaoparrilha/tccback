@@ -46,6 +46,18 @@ public class UsuarioResource {
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
+	@PostMapping("/validacao")
+	public ResponseEntity<String> login(@RequestBody Usuario obj){
+		try {
+			
+            Usuario usuario = service.login(obj.getEmail(), obj.getSenha());
+            String retorno = "Sucess";
+            return ResponseEntity.ok().body(retorno);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(401).body(null); // Status 401 Unauthorized
+        }
+	}
+	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		service.delete(id);
@@ -59,15 +71,19 @@ public class UsuarioResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	@PostMapping("/validacao")
-	public ResponseEntity<String> login(@RequestBody Usuario obj){
+	/*@PostMapping("/validacao")
+	public ResponseEntity<Usuario> login(@RequestBody Usuario obj){
 		try {
+			System.out.println("Tentando autenticar o usuário com email: " + obj.getEmail());
+			System.out.println("Tentando autenticar o usuário com email: " + obj.getSenha());
             Usuario usuario = service.login(obj.getEmail(), obj.getSenha());
-            String retorno = "Sucess";
-            return ResponseEntity.ok().body(retorno);
+            System.out.println("Usuário autenticado com sucesso.");
+           //String retorno = "Sucess";
+            return ResponseEntity.ok().body(usuario);
         } catch (RuntimeException e) {
             return ResponseEntity.status(401).body(null); // Status 401 Unauthorized
         }
-	}
+	}*/
+	
 	
 }

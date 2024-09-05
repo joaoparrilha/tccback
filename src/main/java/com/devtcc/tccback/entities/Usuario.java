@@ -131,6 +131,8 @@ public class Usuario implements Serializable {
 		Usuario other = (Usuario) obj;
 		return Objects.equals(id, other.id);
 	}
+	
+	
 
 	@Override
 	public String toString() {
@@ -138,8 +140,4 @@ public class Usuario implements Serializable {
 				+ senha + ", telefone=" + telefone + ", status=" + status + "]";
 	}
 
-	
-	
-	
-	
 }
