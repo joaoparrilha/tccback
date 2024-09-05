@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -55,20 +56,44 @@ public class AtivoResource {
 	//	return ResponseEntity.created(uri).body(obj);
 	//}
 	
-	@PostMapping
-	public ResponseEntity<Ativo> insert(@RequestBody Ativo obj, @RequestParam("arquivo") MultipartFile file){
-		try {
-			obj.setArquivo(file.getBytes());
-			obj = service.insert(obj);
-			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-			return ResponseEntity.created(uri).body(obj);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			return ResponseEntity.status(500).build();
-		}
+	@PostMapping(consumes = "multipart/form-data")
+	public ResponseEntity<Ativo> insert(
+	        @RequestParam("nome") String nome,
+	        @RequestParam("dominio") String dominio,
+	        @RequestParam("descricao") String descricao,
+	        @RequestParam("tipo") String tipo,
+	        @RequestParam("versao") String versao,  // 'versao' will be converted to Float
+	        @RequestPart("arquivo") MultipartFile file) {
+
+	    Ativo obj = new Ativo();  // Assuming 'Ativo' has a default constructor
+	    obj.setNome(nome);
+	    obj.setDominio(dominio);
+	    obj.setDescricao(descricao);
+	    obj.setTipo(tipo);
+
+	    try {
+	        // Convert the 'versao' from String to Float
+	        obj.setVersao(Float.parseFloat(versao));
+
+	        // Set the file as byte array
+	        obj.setArquivo(file.getBytes());
+	        
+	        // Insert the object using the service
+	        obj = service.insert(obj);
+	        
+	        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+	        return ResponseEntity.created(uri).body(obj);
+	    } catch (NumberFormatException e) {
+	        // Handle the exception if 'versao' is not a valid float
+	        return ResponseEntity.badRequest().body(null);
+	    } catch (IOException e) {
+	        // Handle the exception for file upload issues
+	        e.printStackTrace();
+	        return ResponseEntity.status(500).build();
+	    }
 	}
-	
+
+
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		service.delete(id);
