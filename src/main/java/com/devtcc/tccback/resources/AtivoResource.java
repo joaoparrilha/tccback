@@ -2,7 +2,9 @@ package com.devtcc.tccback.resources;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.Base64;
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,12 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.apache.tika.Tika;
 import com.devtcc.tccback.entities.Ativo;
 import com.devtcc.tccback.services.AtivoService;
 
@@ -105,4 +112,65 @@ public class AtivoResource {
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
+	
+	@GetMapping("/download")
+	public ResponseEntity<Resource> downloadFile(@RequestParam Long id) {
+	    Ativo ativo = service.findById(id);
+	    if (ativo == null || ativo.getArquivo() == null) {
+	        return ResponseEntity.notFound().build();
+	    }
+
+	    ByteArrayResource resource = new ByteArrayResource(ativo.getArquivo());
+
+	    // Determina o tipo MIME com base no conteúdo do arquivo
+	    String mimeType = determineMimeType(ativo.getArquivo());
+	    String fileExtension = determineFileExtension(mimeType);
+
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add(HttpHeaders.CONTENT_TYPE, mimeType != null ? mimeType : MediaType.APPLICATION_OCTET_STREAM_VALUE);
+	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + ativo.getNome() + "." + fileExtension + "\"");
+
+	    return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+	}
+
+	private String determineMimeType(byte[] arquivo) {
+	    Tika tika = new Tika();
+	    return tika.detect(arquivo);
+	}
+
+	private String determineFileExtension(String mimeType) {
+	    switch (mimeType) {
+	        case MediaType.APPLICATION_PDF_VALUE:
+	            return "pdf";
+	        case MediaType.IMAGE_JPEG_VALUE:
+	            return "jpeg";
+	        case MediaType.IMAGE_PNG_VALUE:
+	            return "png";
+	        case MediaType.TEXT_PLAIN_VALUE:
+	            return "txt";
+	        case "application/sql":
+	            return "sql";
+	        // Adicione mais tipos conforme necessário
+	        default:
+	            return "bin";  // Extensão genérica para tipos MIME desconhecidos
+	    }   
+	}
+
+	
+	/*	@GetMapping("/download")
+	public ResponseEntity<byte[]> baixarArquivo(@RequestParam Long id) {
+	    try {
+	        Ativo ativo = service.findById(id);
+
+	        byte[] arquivo = ativo.getArquivo(); 
+
+	        return ResponseEntity.ok()
+	                .header("Content-Disposition", "attachment; filename=\"arquivo_" + id + "\"")
+	                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+	                .body(arquivo);
+	    } catch (Exception e) {
+	        return ResponseEntity.status(500).build();
+	    }
+	}
+*/
 }
