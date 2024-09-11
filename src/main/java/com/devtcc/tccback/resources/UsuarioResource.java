@@ -46,7 +46,7 @@ public class UsuarioResource {
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
-	@PostMapping("/validacao")
+	/*@PostMapping("/validacao")
 	public ResponseEntity<String> login(@RequestBody Usuario obj){
 		try {
 			
@@ -56,7 +56,7 @@ public class UsuarioResource {
         } catch (RuntimeException e) {
             return ResponseEntity.status(401).body(null); // Status 401 Unauthorized
         }
-	}
+	}*/
 	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id){

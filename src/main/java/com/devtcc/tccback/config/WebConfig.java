@@ -1,4 +1,4 @@
-package com.devtcc.tccback.config;
+/*package com.devtcc.tccback.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -9,10 +9,10 @@ public class WebConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/*")
+		registry.addMapping("/**")
 		.allowedOrigins("http://localhost:3000")
-		.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-		.allowedHeaders("*");
+		.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
+		//.allowedHeaders("*");
 		
 		/*registry.addMapping("/ativo")
 		.allowedOrigins("http://localhost:3000")
@@ -32,6 +32,7 @@ public class WebConfig implements WebMvcConfigurer{
 		
 		registry.addMapping("/usuario/validacao")
 		.allowedOrigins("http://localhost:3000")
-		.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");*/
+		.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
 	}
 }
+*/

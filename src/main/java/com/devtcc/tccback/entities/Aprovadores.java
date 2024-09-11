@@ -1,6 +1,8 @@
 package com.devtcc.tccback.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,6 +12,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -32,14 +36,25 @@ public class Aprovadores implements Serializable {
 	@JoinColumn(name = "fk_Usuario_id")
 	private Usuario usuario;
 	
-	@ManyToOne
-	@JoinColumn(name = "fk_Checklist_id")
+	@ManyToMany
+	@JoinTable(name = "tb_check_aprov", 
+	joinColumns = @JoinColumn(name = "aprovadores_id"),
+	inverseJoinColumns = @JoinColumn(name = "checklist_id"))
 	@JsonIgnore
-	private Checklist checklist;
+	private List<Checklist> checklists = new ArrayList<>();
 	
 	public Aprovadores (){
 		
 	}
+
+	public Aprovadores(Long id, String aprovador, Usuario usuario, List<Checklist> checklists) {
+		super();
+		this.id = id;
+		this.aprovador = aprovador;
+		this.usuario = usuario;
+		this.checklists = checklists;
+	}
+
 
 	public Aprovadores(Long id, String aprovador, Usuario usuario) {
 		super();
@@ -67,20 +82,24 @@ public class Aprovadores implements Serializable {
 	public Usuario getUsuario() {
 		return usuario;
 	}
-	
-	public Checklist getChecklist() {
-		return checklist;
+
+	public List<Checklist> getChecklists() {
+		return checklists;
 	}
 
-	public void setChecklist(Checklist checklist) {
-		this.checklist = checklist;
+	public void setChecklists(List<Checklist> checklists) {
+		this.checklists = checklists;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

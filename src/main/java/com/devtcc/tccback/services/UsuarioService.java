@@ -64,15 +64,15 @@ public class UsuarioService {
 			entity.setTelefone(obj.getTelefone());
 		}
 		
-		if(obj.getTelefone() != null) {
-			entity.setStatus(obj.getStatus());
+		if(obj.getRole() != null) {
+			entity.setRole(obj.getRole());
 		}	
 	}
 	
-	public Usuario login(String email, String senha){
+/*	public Usuario login(String email, String senha){
 		Optional<Usuario> usuario = repo.findByEmail(email);
 		if(usuario.isPresent() && usuario.get().getSenha().equals(senha)) {
-			if("administrador".equals(usuario.get().getStatus()) || "validador".equals(usuario.get().getStatus())) {
+			if("administrador".equals(usuario.get().getRole().getRole()) || "validador".equals(usuario.get().getRole().getRole())) {
 				return usuario.get();
 			}else {
 				 throw new RuntimeException("Usuário inválido");
@@ -80,6 +80,6 @@ public class UsuarioService {
 		}else {
 			 throw new RuntimeException("Email ou senha inválidos");
 		}
-	}
+	}*/
 	
 }

@@ -2,8 +2,13 @@ package com.devtcc.tccback.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Table
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario implements Serializable {
+public class Usuario implements Serializable, UserDetails {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -32,7 +37,7 @@ public class Usuario implements Serializable {
 	private String email;
 	private String senha;
 	private String telefone;
-	private String status;
+	private UsuarioRole role;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "usuario")
@@ -44,7 +49,7 @@ public class Usuario implements Serializable {
 	}
 	
 	public Usuario(Long id, String nome, String matricula, String email, String senha, String telefone,
-			String status) {
+			UsuarioRole role) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -52,7 +57,32 @@ public class Usuario implements Serializable {
 		this.email = email;
 		this.senha = senha;
 		this.telefone = telefone;
-		this.status = status;
+		this.role = role;
+	}
+	
+	public Usuario(String nome, String matricula, String email, String senha, String telefone, UsuarioRole role) {
+		super();
+		this.nome = nome;
+		this.matricula = matricula;
+		this.email = email;
+		this.senha = senha;
+		this.telefone = telefone;
+		this.role = role;
+	}
+	
+	
+
+	public Usuario(Long id, String nome, String matricula, String email, String senha, String telefone,
+			UsuarioRole role, List<Ativo> ativos) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.matricula = matricula;
+		this.email = email;
+		this.senha = senha;
+		this.telefone = telefone;
+		this.role = role;
+		this.ativos = ativos;
 	}
 
 	public Long getId() {
@@ -103,16 +133,20 @@ public class Usuario implements Serializable {
 		this.telefone = telefone;
 	}
 
-	public String getStatus() {
-		return status;
+	public UsuarioRole getRole() {
+		return role;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setRole(UsuarioRole role) {
+		this.role = role;
 	}
 	
 	public List<Ativo> getAtivos() {
 		return ativos;
+	}
+
+	public void setAtivos(List<Ativo> ativos) {
+		this.ativos = ativos;
 	}
 
 	@Override
@@ -137,7 +171,45 @@ public class Usuario implements Serializable {
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nome=" + nome + ", matricula=" + matricula + ", email=" + email + ", senha="
-				+ senha + ", telefone=" + telefone + ", status=" + status + "]";
+				+ senha + ", telefone=" + telefone + ", role=" + role + "]";
 	}
 
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		if(this.role == UsuarioRole.ADMINISTRADOR) return List.of(new SimpleGrantedAuthority("ROLE_ADMINISTRADOR"), new SimpleGrantedAuthority("ROLE_USUARIO"),new SimpleGrantedAuthority("ROLE_VALIDADOR"));
+		else return List.of(new SimpleGrantedAuthority("ROLE_USUARIO"));
+	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return senha;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return email;
+	}
+
+	@Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

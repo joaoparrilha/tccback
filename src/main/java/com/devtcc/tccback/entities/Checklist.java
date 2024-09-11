@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -37,8 +37,12 @@ public class Checklist implements Serializable{
 	private Boolean homologacao;
 	private byte[] dochomo;
 	
-	@OneToMany(mappedBy = "checklist")
+	@ManyToMany(mappedBy = "checklists")
 	private List<Aprovadores> aprovadores = new ArrayList<>();
+	
+	@OneToOne
+	@MapsId
+	private Ativo ativo;
 	
 	public Checklist() {
 		
@@ -59,6 +63,7 @@ public class Checklist implements Serializable{
 		this.dochomo = dochomo;
 	}
 
+	
 	public Long getId() {
 		return id;
 	}
@@ -145,6 +150,14 @@ public class Checklist implements Serializable{
 
 	public void setAprovadores(List<Aprovadores> aprovadores) {
 		this.aprovadores = aprovadores;
+	}
+
+	public Ativo getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Ativo ativo) {
+		this.ativo = ativo;
 	}
 
 	@Override

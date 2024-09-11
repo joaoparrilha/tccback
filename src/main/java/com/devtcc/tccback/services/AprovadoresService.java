@@ -49,8 +49,8 @@ public class AprovadoresService {
 			entity.setAprovador(obj.getAprovador());
 		}
 		
-		if(obj.getChecklist() != null) {
-			entity.setChecklist(obj.getChecklist());
+		if(obj.getChecklists() != null) {
+			entity.setChecklists(obj.getChecklists());
 		}
 	}
 	
