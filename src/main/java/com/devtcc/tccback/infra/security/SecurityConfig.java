@@ -39,8 +39,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                 .requestMatchers(HttpMethod.POST, "/ativo/validar").hasRole("VALIDADOR")
-                .requestMatchers(HttpMethod.GET, "/usuario").hasRole("USUARIO")
-                
+                .requestMatchers(HttpMethod.GET, "/usuario").hasRole("USUARIO")                
+                .requestMatchers(HttpMethod.GET, "/ativo").permitAll()
                 .requestMatchers(HttpMethod.POST, "/ativo").permitAll()
                 .anyRequest().authenticated()
             )
