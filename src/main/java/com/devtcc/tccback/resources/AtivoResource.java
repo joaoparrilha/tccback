@@ -148,29 +148,9 @@ public class AtivoResource {
 	            return "png";
 	        case MediaType.TEXT_PLAIN_VALUE:
 	            return "txt";
-	        case "application/sql":
-	            return "sql";
-	        // Adicione mais tipos conforme necessário
 	        default:
-	            return "bin";  // Extensão genérica para tipos MIME desconhecidos
+	            return "bin"; 
 	    }   
 	}
 
-	
-	/*	@GetMapping("/download")
-	public ResponseEntity<byte[]> baixarArquivo(@RequestParam Long id) {
-	    try {
-	        Ativo ativo = service.findById(id);
-
-	        byte[] arquivo = ativo.getArquivo(); 
-
-	        return ResponseEntity.ok()
-	                .header("Content-Disposition", "attachment; filename=\"arquivo_" + id + "\"")
-	                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-	                .body(arquivo);
-	    } catch (Exception e) {
-	        return ResponseEntity.status(500).build();
-	    }
-	}
-*/
 }

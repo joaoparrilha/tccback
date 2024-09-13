@@ -41,6 +41,7 @@ public class AuthResource {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
+	@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
 	@PostMapping("/login")
 	public ResponseEntity<ResponseDTO> login(@RequestBody LoginRequestDTO body) {
 		
@@ -61,10 +62,11 @@ public class AuthResource {
 		var userPassword = new UsernamePasswordAuthenticationToken(body.email(), body.senha());
 		var auth = this.authenticationManager.authenticate(userPassword);
 		var token = this.tokenService.generateToken((Usuario)auth.getPrincipal());
-		String retorno = "Sucess";
+		
         return ResponseEntity.ok().body(new ResponseDTO(body.email(), token));
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
 	@PostMapping("/register")
 	public ResponseEntity<ResponseDTO> register(@RequestBody RegisterRequestDTO body) {
 		
