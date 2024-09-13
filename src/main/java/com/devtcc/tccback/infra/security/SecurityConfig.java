@@ -38,10 +38,15 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                .requestMatchers(HttpMethod.POST, "/ativo/validar").hasRole("VALIDADOR")
-                .requestMatchers(HttpMethod.GET, "/usuario").hasRole("USUARIO")                
+                .requestMatchers(HttpMethod.GET, "/usuario").hasRole("ADMINISTRADOR")                
+                .requestMatchers(HttpMethod.PUT, "/usuario").hasRole("ADMINISTRADOR")                
+                .requestMatchers(HttpMethod.POST, "/usuario").hasRole("ADMINISTRADOR")                
                 .requestMatchers(HttpMethod.GET, "/ativo").permitAll()
                 .requestMatchers(HttpMethod.POST, "/ativo").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/ativo").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/ativo").permitAll()
+                .requestMatchers(HttpMethod.GET, "/ativo/download").permitAll()
+                .requestMatchers(HttpMethod.POST, "/ativo/validar").hasRole("VALIDADOR")
                 .anyRequest().authenticated()
             )
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

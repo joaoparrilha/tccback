@@ -21,8 +21,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Aprovadores")
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class Aprovadores implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Checklist")
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class Checklist implements Serializable{
 
 	private static final long serialVersionUID = 1L;

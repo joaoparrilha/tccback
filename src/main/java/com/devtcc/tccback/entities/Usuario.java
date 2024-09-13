@@ -23,8 +23,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class Usuario implements Serializable, UserDetails {
 
 	private static final long serialVersionUID = 1L;

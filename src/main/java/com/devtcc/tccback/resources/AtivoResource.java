@@ -77,6 +77,8 @@ public class AtivoResource {
 	    obj.setDominio(dominio);
 	    obj.setDescricao(descricao);
 	    obj.setTipo(tipo);
+	    obj.setValidacao(false);
+	    obj.setDownload(0);
 
 	    try {
 	        // Convert the 'versao' from String to Float
@@ -119,7 +121,10 @@ public class AtivoResource {
 	    if (ativo == null || ativo.getArquivo() == null) {
 	        return ResponseEntity.notFound().build();
 	    }
-
+	    
+	    ativo.setDownload(ativo.getDownload() + 1);
+	    ativo = service.update(id, ativo);
+	    
 	    ByteArrayResource resource = new ByteArrayResource(ativo.getArquivo());
 
 	    // Determina o tipo MIME com base no conteúdo do arquivo

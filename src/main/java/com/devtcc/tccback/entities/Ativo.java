@@ -24,8 +24,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class Ativo implements Serializable{
 
 	private static final long serialVersionUID = 1L;

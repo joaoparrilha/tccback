@@ -90,7 +90,7 @@ public class AuthResource {
 		if(this.repo.findByEmail(body.email()) != null) return ResponseEntity.badRequest().build();
 		
 		String encryptedSenha = new BCryptPasswordEncoder().encode(body.senha());
-		Usuario newUser = new Usuario(body.nome(), body.matricula(), body.email(), encryptedSenha, body.telefone(), UsuarioRole.ADMINISTRADOR);
+		Usuario newUser = new Usuario(body.nome(), body.matricula(), body.email(), encryptedSenha, body.telefone(), UsuarioRole.VALIDADOR);
 		
 		this.repo.save(newUser);
 		String token = this.tokenService.generateToken(newUser);
