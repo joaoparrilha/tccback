@@ -2,11 +2,15 @@ package com.devtcc.tccback.resources;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.Base64;
 import java.util.List;
 
-
+import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,12 +25,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.apache.tika.Tika;
+
 import com.devtcc.tccback.entities.Ativo;
 import com.devtcc.tccback.services.AtivoService;
 
@@ -38,9 +37,15 @@ public class AtivoResource {
 	@Autowired
 	private AtivoService service;
 	
-	@GetMapping
+	/*@GetMapping
 	public ResponseEntity<List<Ativo>> findAll(){
 		List<Ativo> list = service.findAll();
+		return ResponseEntity.ok().body(list);
+	}*/
+	
+	@GetMapping
+	public ResponseEntity<List<Ativo>> findAll(){
+		List<Ativo> list = service.findValidacaoTrue();
 		return ResponseEntity.ok().body(list);
 	}
 	

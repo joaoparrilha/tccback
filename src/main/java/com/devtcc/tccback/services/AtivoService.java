@@ -31,6 +31,10 @@ public class AtivoService {
 		return repo.findByValidacao(false);
 	}
 	
+	public List<Ativo> findValidacaoTrue(){
+		return repo.findByValidacao(true);
+	}
+	
 	public Ativo insert(Ativo obj) {
 		
 		LocalDate localDate = LocalDate.now();
