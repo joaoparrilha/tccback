@@ -62,8 +62,10 @@ public class AuthResource {
 		var userPassword = new UsernamePasswordAuthenticationToken(body.email(), body.senha());
 		var auth = this.authenticationManager.authenticate(userPassword);
 		var token = this.tokenService.generateToken((Usuario)auth.getPrincipal());
+		var usuario = this.repo.findByEmail(body.email());
+		var role = usuario.getRole().toString();
 		
-        return ResponseEntity.ok().body(new ResponseDTO(body.email(), token));
+        return ResponseEntity.ok().body(new ResponseDTO(body.email(), token, role));
 	}
 	
 	@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
@@ -94,7 +96,9 @@ public class AuthResource {
 		
 		this.repo.save(newUser);
 		String token = this.tokenService.generateToken(newUser);
-		return ResponseEntity.ok(new ResponseDTO(newUser.getNome(), token));
+		var usuario = this.repo.findByEmail(body.email());
+		var role = usuario.getRole().toString();
+		return ResponseEntity.ok(new ResponseDTO(newUser.getNome(), token, role));
 		//return ResponseEntity.ok().build();
 	}
 }

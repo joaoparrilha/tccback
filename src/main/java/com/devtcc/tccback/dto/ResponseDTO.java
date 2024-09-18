@@ -1,5 +1,5 @@
 package com.devtcc.tccback.dto;
 
-public record ResponseDTO(String nome, String token) {
+public record ResponseDTO(String nome, String token, String role) {
 
 }
