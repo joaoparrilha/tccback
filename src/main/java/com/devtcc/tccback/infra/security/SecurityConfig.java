@@ -45,6 +45,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/ativo").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/ativo").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/ativo").permitAll()
+                .requestMatchers(HttpMethod.GET, "/ativo/dashboard").permitAll()
                 .requestMatchers(HttpMethod.GET, "/ativo/download").permitAll()
                 .requestMatchers(HttpMethod.POST, "/ativo/validar").hasRole("VALIDADOR")
                 .anyRequest().authenticated()

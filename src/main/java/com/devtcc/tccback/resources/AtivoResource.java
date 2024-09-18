@@ -37,14 +37,14 @@ public class AtivoResource {
 	@Autowired
 	private AtivoService service;
 	
-	/*@GetMapping
+	@GetMapping("/dashboard")
 	public ResponseEntity<List<Ativo>> findAll(){
 		List<Ativo> list = service.findAll();
 		return ResponseEntity.ok().body(list);
-	}*/
+	}
 	
 	@GetMapping
-	public ResponseEntity<List<Ativo>> findAll(){
+	public ResponseEntity<List<Ativo>> findAllTrue(){
 		List<Ativo> list = service.findValidacaoTrue();
 		return ResponseEntity.ok().body(list);
 	}

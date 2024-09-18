@@ -3,6 +3,8 @@ package com.devtcc.tccback.infra.security;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,11 +23,17 @@ public class TokenService {
 	
 	public String generateToken(Usuario usuario){
 		
+		Map<String, Object> claims = new HashMap<>();
+		claims.put("id", usuario.getId().toString());
+		claims.put("nome", usuario.getNome());
+		claims.put("role", usuario.getRole().toString());
+		
 		try {
 			
 			Algorithm algorithm = Algorithm.HMAC256(secret);
 			
 			String token = JWT.create().withIssuer("tccback")
+					.withClaim(secret, claims)
 					.withSubject(usuario.getEmail())
 					.withExpiresAt(this.generateExpirationDate())
 					.sign(algorithm);	
