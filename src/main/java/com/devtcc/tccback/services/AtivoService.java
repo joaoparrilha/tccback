@@ -27,7 +27,7 @@ public class AtivoService {
 		return usuario.get();
 	}
 	
-	public List<Ativo> findValidacao(){
+	public List<Ativo> findValidacaoFalse(){
 		return repo.findByValidacao(false);
 	}
 	

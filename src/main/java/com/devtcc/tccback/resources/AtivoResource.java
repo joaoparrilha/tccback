@@ -57,7 +57,7 @@ public class AtivoResource {
 	
 	@GetMapping("/validar")
 	public ResponseEntity<List<Ativo>> findByValidacaoFalse(){
-		List<Ativo> list = service.findValidacao();
+		List<Ativo> list = service.findValidacaoFalse();
 		return ResponseEntity.ok().body(list);
 	}
 	

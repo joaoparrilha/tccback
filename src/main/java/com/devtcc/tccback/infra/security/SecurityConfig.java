@@ -47,7 +47,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/ativo").permitAll()
                 .requestMatchers(HttpMethod.GET, "/ativo/dashboard").permitAll()
                 .requestMatchers(HttpMethod.GET, "/ativo/download").permitAll()
-                .requestMatchers(HttpMethod.POST, "/ativo/validar").hasRole("VALIDADOR")
+                .requestMatchers(HttpMethod.POST, "/ativo/validar").hasAnyRole("VALIDADOR", "ADMINISTRADOR")
+                .requestMatchers(HttpMethod.GET, "/ativo/validar").hasAnyRole("VALIDADOR", "ADMINISTRADOR")    
                 .anyRequest().authenticated()
             )
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
