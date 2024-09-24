@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -48,7 +49,7 @@ public class Ativo implements Serializable{
 	private byte[] arquivo;
 	
 	@ManyToOne
-	@JoinColumn(name = "fk_Usuario_id")
+	@JoinColumn(name = "fk_usuario_id")
 	private Usuario usuario;
 	
 	@OneToOne(mappedBy = "ativo", cascade = CascadeType.ALL)

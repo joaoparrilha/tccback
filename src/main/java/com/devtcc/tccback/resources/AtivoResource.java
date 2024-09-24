@@ -37,6 +37,13 @@ public class AtivoResource {
 	@Autowired
 	private AtivoService service;
 	
+	@GetMapping("/ativosById")
+	public ResponseEntity<List<Ativo>> findByUsuario(@RequestParam ("id") Long id){
+			
+		List<Ativo> ativos = service.findByUsuario(id);
+		return ResponseEntity.ok().body(ativos);
+	}
+	
 	@GetMapping("/dashboard")
 	public ResponseEntity<List<Ativo>> findAll(){
 		List<Ativo> list = service.findAll();

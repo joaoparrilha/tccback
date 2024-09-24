@@ -9,4 +9,6 @@ import com.devtcc.tccback.entities.Ativo;
 public interface AtivoRepository extends JpaRepository<Ativo, Long>{
 
 	List<Ativo> findByValidacao(Boolean validacao);
+	
+	List<Ativo> findByUsuarioId(Long id);
 }

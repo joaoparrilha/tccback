@@ -103,4 +103,9 @@ public class AtivoService {
 			entity.setUsuario(obj.getUsuario());
 		}
 	}
+	
+	public List<Ativo> findByUsuario(Long id){
+		
+		return repo.findByUsuarioId(id);
+	}
 }
