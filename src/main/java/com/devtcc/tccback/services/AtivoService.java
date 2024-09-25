@@ -10,13 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.devtcc.tccback.entities.Ativo;
+import com.devtcc.tccback.entities.Usuario;
 import com.devtcc.tccback.repositories.AtivoRepository;
+import com.devtcc.tccback.repositories.UsuarioRepository;
 
 @Service
 public class AtivoService {
 	
 	@Autowired
 	private AtivoRepository repo;
+	
+	@Autowired
+	private UsuarioRepository repoUsuario;
 	
 	public List<Ativo> findAll(){
 		return repo.findAll();
@@ -35,8 +40,14 @@ public class AtivoService {
 		return repo.findByValidacao(true);
 	}
 	
-	public Ativo insert(Ativo obj) {
+	public Ativo insert(Ativo obj, Long id) {
 		
+		Optional<Usuario> opUsuario = repoUsuario.findById(id);
+		if(opUsuario.isPresent()){
+			Usuario usuario = opUsuario.get();
+			obj.setUsuario(usuario);
+		}
+				
 		LocalDate localDate = LocalDate.now();
 		Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		obj.setCriado(date);

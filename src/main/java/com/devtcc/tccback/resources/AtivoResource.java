@@ -83,7 +83,7 @@ public class AtivoResource {
 	        @RequestParam("tipo") String tipo,
 	        @RequestParam("versao") String versao,  // 'versao' will be converted to Float
 	        @RequestPart("arquivo") MultipartFile file,
-	        @RequestParam("fk_usuario_id") Long Id) {
+	        @RequestParam("fk_usuario_id") Long id) {
 
 	    Ativo obj = new Ativo();  // Assuming 'Ativo' has a default constructor
 	    obj.setNome(nome);
@@ -92,7 +92,6 @@ public class AtivoResource {
 	    obj.setTipo(tipo);
 	    obj.setValidacao(false);
 	    obj.setDownload(0);
-	    obj.getUsuario().setId(Id);
 
 	    try {
 	        // Convert the 'versao' from String to Float
@@ -102,7 +101,7 @@ public class AtivoResource {
 	        obj.setArquivo(file.getBytes());
 	        
 	        // Insert the object using the service
-	        obj = service.insert(obj);
+	        obj = service.insert(obj, id);
 	        
 	        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 	        return ResponseEntity.created(uri).body(obj);
