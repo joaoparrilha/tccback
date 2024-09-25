@@ -82,7 +82,8 @@ public class AtivoResource {
 	        @RequestParam("descricao") String descricao,
 	        @RequestParam("tipo") String tipo,
 	        @RequestParam("versao") String versao,  // 'versao' will be converted to Float
-	        @RequestPart("arquivo") MultipartFile file) {
+	        @RequestPart("arquivo") MultipartFile file,
+	        @RequestParam("fk_usuario_id") Long Id) {
 
 	    Ativo obj = new Ativo();  // Assuming 'Ativo' has a default constructor
 	    obj.setNome(nome);
@@ -91,6 +92,7 @@ public class AtivoResource {
 	    obj.setTipo(tipo);
 	    obj.setValidacao(false);
 	    obj.setDownload(0);
+	    obj.getUsuario().setId(Id);
 
 	    try {
 	        // Convert the 'versao' from String to Float
