@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.devtcc.tccback.entities.Avaliacao;
+import com.devtcc.tccback.entities.Checklist;
 import com.devtcc.tccback.services.AvaliacaoService;
 
 @RestController
@@ -39,12 +41,25 @@ public class AvaliacaoResource {
 		return ResponseEntity.ok().body(avaliacao);
 	}	
 	
-	@PostMapping
-	public ResponseEntity<Avaliacao> insert(@RequestBody Avaliacao obj){
-		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+	@GetMapping("/avaliacao/ativo/{ativoId}")
+	public ResponseEntity<List<Avaliacao>> findByAtivoId(@PathVariable Long ativoId) {
+	    List<Avaliacao> avaliacoes = service.findByAtivoId(ativoId);
+	    return ResponseEntity.ok(avaliacoes);
 	}
+
+	@PostMapping
+	public ResponseEntity<Avaliacao> insert(
+	        @RequestBody Avaliacao obj, 
+	        @RequestParam Long fk_ativo_id, 
+	        @RequestParam Long fk_usuario_id) {
+	    
+	    obj = service.insert(obj, fk_ativo_id, fk_usuario_id);
+	    
+	    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+	    
+	    return ResponseEntity.created(uri).body(obj);
+	}
+
 	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id){
