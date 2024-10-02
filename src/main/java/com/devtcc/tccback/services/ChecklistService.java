@@ -6,7 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.devtcc.tccback.entities.Ativo;
 import com.devtcc.tccback.entities.Checklist;
+import com.devtcc.tccback.entities.Usuario;
+import com.devtcc.tccback.repositories.AtivoRepository;
 import com.devtcc.tccback.repositories.ChecklistRepository;
 
 @Service
@@ -14,6 +17,9 @@ public class ChecklistService {
 	
 	@Autowired
 	private ChecklistRepository repo;
+	
+	@Autowired
+	private AtivoRepository ativoRepo;
 	
 	public List<Checklist> findAll(){
 		return repo.findAll();
@@ -24,7 +30,20 @@ public class ChecklistService {
 		return checklist.get();
 	}
 	
-	public Checklist insert(Checklist obj) {
+	public Checklist findByAtivoId(Long ativo_id){
+		Optional<Checklist> checklist = repo.findByAtivoId(ativo_id);
+		return checklist.get();
+	}
+	
+	public Checklist insert(Checklist obj, Long id) {
+		
+		Optional<Ativo> opAtivo = ativoRepo.findById(id);
+		if(opAtivo.isPresent()){
+			Ativo ativo = opAtivo.get();
+			obj.setAtivo(ativo);
+		}
+				
+		
 		return repo.save(obj);
 	}
 	
@@ -32,10 +51,10 @@ public class ChecklistService {
 		repo.deleteById(id);
 	}
 	
-	public Checklist update(Long id, Checklist obj){
-		Checklist entity = repo.getReferenceById(id);
-		updateData(entity, obj);
-		return repo.save(entity);
+	public Checklist update(Long id, Checklist obj) {
+	    Checklist entity = repo.getReferenceById(id);
+	    updateData(entity, obj); 
+	    return repo.save(entity); 
 	}
 
 	private void updateData(Checklist entity, Checklist obj) {

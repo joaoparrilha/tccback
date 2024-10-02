@@ -9,8 +9,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -25,42 +26,47 @@ public class Checklist implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String nome;
-	private String dominio;
-	private Boolean revisao;
-	private Boolean refinamento;
-	private byte[] docrefi;
-	private Boolean teste;
-	private byte[] docteste;
-	private Boolean homologacao;
-	private byte[] dochomo;
+    private String nome;
+    private String dominio;
+    private Boolean revisao;
+    private Boolean refinamento;
+    private Boolean teste;
+    private Boolean homologacao;
+
+    @Lob
+    private byte[] docrefi;
+
+    @Lob
+    private byte[] docteste;
+
+    @Lob
+    private byte[] dochomo;
 	
 	@ManyToMany(mappedBy = "checklists")
 	private List<Aprovadores> aprovadores = new ArrayList<>();
 	
-	@OneToOne
-	@MapsId
-	private Ativo ativo;
+    @OneToOne
+    @JoinColumn(name = "ativo_id")
+    private Ativo ativo;
 	
 	public Checklist() {
 		
 	}
  
-	public Checklist(Long id, String nome, String dominio, Boolean revisao, Boolean refinamento, byte[] docrefi,
-			Boolean teste, byte[] docteste, Boolean homologacao, byte[] dochomo) {
+	public Checklist(Long id, String nome, String dominio, Boolean revisao, Boolean refinamento,
+			Boolean teste, Boolean homologacao, byte[] docrefi, byte[] docteste, byte[] dochomo) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.dominio = dominio;
 		this.revisao = revisao;
 		this.refinamento = refinamento;
-		this.docrefi = docrefi;
 		this.teste = teste;
-		this.docteste = docteste;
 		this.homologacao = homologacao;
+		this.docrefi = docrefi;
+		this.docteste = docteste;
 		this.dochomo = dochomo;
 	}
-
 	
 	public Long getId() {
 		return id;
@@ -125,14 +131,14 @@ public class Checklist implements Serializable{
 	public void setDocteste(byte[] docteste) {
 		this.docteste = docteste;
 	}
-
-	public Boolean getHomologacao() {
-		return homologacao;
-	}
-
+	
 	public void setHomologacao(Boolean homologacao) {
 		this.homologacao = homologacao;
 	}
+
+	public Boolean getHomologacao() {
+		return homologacao;
+	}	
 
 	public byte[] getDochomo() {
 		return dochomo;
