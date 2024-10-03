@@ -41,7 +41,7 @@ public class AvaliacaoResource {
 		return ResponseEntity.ok().body(avaliacao);
 	}	
 	
-	@GetMapping("/avaliacao/ativo/{ativoId}")
+	@GetMapping("/ativo/{ativoId}")
 	public ResponseEntity<List<Avaliacao>> findByAtivoId(@PathVariable Long ativoId) {
 	    List<Avaliacao> avaliacoes = service.findByAtivoId(ativoId);
 	    return ResponseEntity.ok(avaliacoes);
