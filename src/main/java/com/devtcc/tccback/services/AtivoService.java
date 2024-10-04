@@ -25,8 +25,24 @@ public class AtivoService {
 	private UsuarioRepository repoUsuario;
 	
 	public List<Ativo> findAll(){
-		return repo.findAll();
+		List<Ativo> ativos = repo.findAll();
+		List<Ativo> retorno = new ArrayList<>();
+		for (Ativo ativo : ativos) {
+			Ativo ativoR =  new Ativo();
+			ativoR.setId(ativo.getId());
+			ativoR.setNome(ativo.getNome());
+			ativoR.setDescricao(ativo.getDescricao());
+			ativoR.setDominio(ativo.getDominio());
+			ativoR.setTipo(ativo.getTipo());
+			ativoR.setDownload(ativo.getDownload());
+			ativoR.setValidacao(ativo.getValidacao());
+			ativoR.setVersao(ativo.getVersao());
+			retorno.add(ativoR);
+		}
+		
+		return retorno;
 	}
+	
 	
 	public Ativo findById(Long id){
 		Optional<Ativo> usuario = repo.findById(id);
