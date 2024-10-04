@@ -2,6 +2,7 @@ package com.devtcc.tccback.services;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -33,11 +34,38 @@ public class AtivoService {
 	}
 	
 	public List<Ativo> findValidacaoFalse(){
-		return repo.findByValidacao(false);
+		List<Ativo> ativos = repo.findByValidacao(false);
+		List<Ativo> retorno = new ArrayList<>();
+		for (Ativo ativo : ativos) {
+			Ativo ativoR =  new Ativo();
+			ativoR.setId(ativo.getId());
+			ativoR.setNome(ativo.getNome());
+			ativoR.setDominio(ativo.getDominio());
+			ativoR.setTipo(ativo.getTipo());
+			ativoR.setValidacao(ativo.getValidacao());
+			retorno.add(ativoR);
+		}
+		
+		return retorno;
+		//return repo.findByValidacao(false);
 	}
 	
 	public List<Ativo> findValidacaoTrue(){
-		return repo.findByValidacao(true);
+		List<Ativo> ativos = repo.findByValidacao(true);
+		List<Ativo> retorno = new ArrayList<>();
+		for (Ativo ativo : ativos) {
+			Ativo ativoR =  new Ativo();
+			ativoR.setId(ativo.getId());
+			ativoR.setNome(ativo.getNome());
+			ativoR.setDominio(ativo.getDominio());
+			ativoR.setTipo(ativo.getTipo());
+			ativoR.setValidacao(ativo.getValidacao());
+			retorno.add(ativoR);
+		}
+		
+		return retorno;
+		
+		//return repo.findByValidacao(true);
 	}
 	
 	public Ativo insert(Ativo obj, Long id) {
