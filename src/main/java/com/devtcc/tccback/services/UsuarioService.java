@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.devtcc.tccback.entities.Aprovadores;
 import com.devtcc.tccback.entities.Usuario;
+import com.devtcc.tccback.entities.UsuarioRole;
 import com.devtcc.tccback.repositories.UsuarioRepository;
 
 @Service
@@ -14,6 +16,9 @@ public class UsuarioService {
 	
 	@Autowired
 	private UsuarioRepository repo;
+	
+	@Autowired
+	private AprovadoresService aprovServ;
 	
 	public List<Usuario> findAll(){
 		return repo.findAll();
@@ -35,6 +40,15 @@ public class UsuarioService {
 	public Usuario update(Long id, Usuario obj){
 		Usuario entity = repo.getReferenceById(id);
 		updateData(entity, obj);
+		
+		if(obj.getRole() == UsuarioRole.VALIDADOR || obj.getRole() == UsuarioRole.ADMINISTRADOR) {
+			Aprovadores aprov = new Aprovadores();
+			aprov.setAprovador(entity.getNome());
+			//aprov.getAprovador().se
+			aprov.setUsuario(entity);
+			aprovServ.insert(aprov);
+			//aprov.getUsuario
+		}
 		return repo.save(entity);
 	}
 
