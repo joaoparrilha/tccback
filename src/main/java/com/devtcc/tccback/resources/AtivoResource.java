@@ -140,7 +140,6 @@ public class AtivoResource {
 	    
 	    ByteArrayResource resource = new ByteArrayResource(ativo.getArquivo());
 
-	    // Determina o tipo MIME com base no conteúdo do arquivo
 	    String mimeType = determineMimeType(ativo.getArquivo());
 	    String fileExtension = determineFileExtension(mimeType);
 

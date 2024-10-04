@@ -55,6 +55,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/checklist").permitAll()    
                 .requestMatchers(HttpMethod.PUT, "/checklist").permitAll()    
                 .requestMatchers(HttpMethod.GET, "/checklist/ativo").permitAll()
+                .requestMatchers(HttpMethod.GET, "/checklist/download").permitAll()
                 .requestMatchers(HttpMethod.GET, "/avaliacao").permitAll()
                 .requestMatchers(HttpMethod.GET, "/avaliacao/ativo/{ativoId}").permitAll()
                 .requestMatchers(HttpMethod.POST, "/avaliacao").permitAll()

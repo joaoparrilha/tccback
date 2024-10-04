@@ -4,7 +4,13 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
+import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -148,13 +154,73 @@ public class ChecklistResource {
 	    }
 	}
 
+	@GetMapping("/download")
+	public ResponseEntity<Resource> downloadFile(
+	    @RequestParam Long ativo_id, 
+	    @RequestParam String fileType // fileType será "docrefi", "docteste", ou "dochomo"
+	) {
+	    Checklist checklist = service.findByAtivoId(ativo_id);
+	    if (checklist == null) {
+	        return ResponseEntity.notFound().build();
+	    }
 
+	    byte[] fileData;
+	    switch (fileType) {
+	        case "docrefi":
+	            fileData = checklist.getDocrefi();
+	            break;
+	        case "docteste":
+	            fileData = checklist.getDocteste();
+	            break;
+	        case "dochomo":
+	            fileData = checklist.getDochomo();
+	            break;
+	        default:
+	            return ResponseEntity.badRequest().body(null);
+	    }
+
+	    if (fileData == null) {
+	        return ResponseEntity.notFound().build();
+	    }
+
+	    ByteArrayResource resource = new ByteArrayResource(fileData);
+	    String mimeType = determineMimeType(fileData);
+	    String fileExtension = determineFileExtension(mimeType);
+
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add(HttpHeaders.CONTENT_TYPE, mimeType != null ? mimeType : MediaType.APPLICATION_OCTET_STREAM_VALUE);
+	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + checklist.getNome() + "_" + fileType + "." + fileExtension + "\"");
+
+	    return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+	}
+
+	private String determineMimeType(byte[] arquivo) {
+	    Tika tika = new Tika();
+	    return tika.detect(arquivo);
+	}
+
+	private String determineFileExtension(String mimeType) {
+	    switch (mimeType) {
+	        case MediaType.APPLICATION_PDF_VALUE:
+	            return "pdf";
+	        case MediaType.IMAGE_JPEG_VALUE:
+	            return "jpeg";
+	        case MediaType.IMAGE_PNG_VALUE:
+	            return "png";
+	        case MediaType.TEXT_PLAIN_VALUE:
+	            return "txt";
+	        default:
+	            return "bin"; 
+	    }   
+	}
 	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	
 	
 //	@PutMapping(value = "/{id}")
 //	public ResponseEntity<Checklist> update(@PathVariable Long id, @RequestBody Checklist obj){

@@ -40,9 +40,11 @@ public class AtivoService {
 			Ativo ativoR =  new Ativo();
 			ativoR.setId(ativo.getId());
 			ativoR.setNome(ativo.getNome());
+			ativoR.setDescricao(ativo.getDescricao());
 			ativoR.setDominio(ativo.getDominio());
 			ativoR.setTipo(ativo.getTipo());
 			ativoR.setValidacao(ativo.getValidacao());
+			ativoR.setVersao(ativo.getVersao());
 			retorno.add(ativoR);
 		}
 		
@@ -57,9 +59,11 @@ public class AtivoService {
 			Ativo ativoR =  new Ativo();
 			ativoR.setId(ativo.getId());
 			ativoR.setNome(ativo.getNome());
+			ativoR.setDescricao(ativo.getDescricao());
 			ativoR.setDominio(ativo.getDominio());
 			ativoR.setTipo(ativo.getTipo());
 			ativoR.setValidacao(ativo.getValidacao());
+			ativoR.setVersao(ativo.getVersao());
 			retorno.add(ativoR);
 		}
 		
