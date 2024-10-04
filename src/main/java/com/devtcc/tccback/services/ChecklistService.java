@@ -11,6 +11,7 @@ import com.devtcc.tccback.entities.Checklist;
 import com.devtcc.tccback.entities.Usuario;
 import com.devtcc.tccback.repositories.AtivoRepository;
 import com.devtcc.tccback.repositories.ChecklistRepository;
+import com.devtcc.tccback.services.exception.AtivoUpdateException;
 
 @Service
 public class ChecklistService {
@@ -53,7 +54,10 @@ public class ChecklistService {
 	
 	public Checklist update(Long id, Checklist obj) {
 	    Checklist entity = repo.getReferenceById(id);
-	    updateData(entity, obj); 
+
+	    updateData(entity, obj);
+	    //updateData(entity, obj);
+	    
 	    return repo.save(entity); 
 	}
 
@@ -71,33 +75,58 @@ public class ChecklistService {
 			entity.setDominio(obj.getDominio());
 		}
 		
+		if(entity.getTeste() == true) {
+			if(obj.getHomologacao() != null) {
+				entity.setHomologacao(obj.getHomologacao());
+			}else{
+				throw new AtivoUpdateException();
+			}
+		}
+		
+		if(entity.getTeste() == true) {
+			if(obj.getDochomo() != null) {
+				entity.setDochomo(obj.getDochomo());
+			}else {
+				throw new AtivoUpdateException();
+			}
+		}
+		
+		if(entity.getRefinamento() == true) {
+			if(obj.getTeste() != null) {
+				entity.setTeste(obj.getTeste());
+			}else {
+				throw new AtivoUpdateException();
+			}
+		}
+		
+		if(entity.getRefinamento() == true) {
+			if(obj.getDocteste() != null){
+				entity.setDocteste(obj.getDocteste());
+			}else {
+				throw new AtivoUpdateException();
+			}
+		}
+		
+		if(entity.getRevisao() == true) {			
+			if(obj.getRefinamento() != null) {
+				entity.setRefinamento(obj.getRefinamento());
+			}else {
+				throw new AtivoUpdateException();
+			}
+		}
+		
+		if(entity.getRevisao() == true) {
+			if(obj.getDocrefi() != null) {
+				entity.setDocrefi(obj.getDocrefi());
+			}else {
+				throw new AtivoUpdateException();
+			}
+		}
+		
 		if(obj.getRevisao() != null) {
 			entity.setRevisao(obj.getRevisao());
 		}
 		
-		if(obj.getRefinamento() != null) {
-			entity.setRefinamento(obj.getRefinamento());
-		}
-		
-		if(obj.getDocrefi() != null) {
-			entity.setDocrefi(obj.getDocrefi());
-		}
-		
-		if(obj.getTeste() != null) {
-			entity.setTeste(obj.getTeste());
-		}
-		
-		if(obj.getDocteste() != null) {
-			entity.setDocteste(obj.getDocteste());
-		}
-		
-		if(obj.getHomologacao() != null) {
-			entity.setHomologacao(obj.getHomologacao());
-		}
-		
-		if(obj.getDochomo() != null) {
-			entity.setDochomo(obj.getDochomo());
-		}
 		
 		if(obj.getAprovadores() != null) {
 			entity.setAprovadores(obj.getAprovadores());

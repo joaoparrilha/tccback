@@ -95,12 +95,12 @@ public class ChecklistResource {
 	@PutMapping(value = "/{id}", consumes = "multipart/form-data")
 	public ResponseEntity<Checklist> update(
 	        @PathVariable Long id,
-	        @RequestParam("nome") String nome,
-	        @RequestParam("dominio") String dominio,
-	        @RequestParam("revisao") Boolean revisao,
-	        @RequestParam("refinamento") Boolean refinamento,
-	        @RequestParam("teste") Boolean teste,
-	        @RequestParam("homologacao") Boolean homologacao, 
+	        @RequestParam(value = "nome", required = false) String nome,
+	        @RequestParam(value = "dominio", required = false) String dominio,
+	        @RequestParam(value = "revisao", required = false) Boolean revisao,
+	        @RequestParam(value = "refinamento", required = false) Boolean refinamento,
+	        @RequestParam(value = "teste", required = false) Boolean teste,
+	        @RequestParam(value = "homologacao", required = false) Boolean homologacao, 
 	        @RequestPart(value = "docrefi", required = false) MultipartFile docrefi,
 	        @RequestPart(value = "docteste", required = false) MultipartFile docteste, 
 	        @RequestPart(value = "dochomo", required = false) MultipartFile dochomo) {
