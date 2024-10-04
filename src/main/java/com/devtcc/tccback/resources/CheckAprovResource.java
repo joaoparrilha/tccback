@@ -33,7 +33,8 @@ public class CheckAprovResource {
 	@Autowired
 	private AprovadoresService aprovService;
 	
-	@Autowired ChecklistService checkService;
+	@Autowired 
+	private ChecklistService checkService;
 	
 	@GetMapping
 	public ResponseEntity<List<CheckAprov>> findAll(){

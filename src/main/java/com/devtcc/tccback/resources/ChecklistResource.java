@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -28,6 +27,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.devtcc.tccback.entities.Ativo;
 import com.devtcc.tccback.entities.Checklist;
+import com.devtcc.tccback.services.AtivoService;
 import com.devtcc.tccback.services.ChecklistService;
 
 @RestController
@@ -37,6 +37,9 @@ public class ChecklistResource {
 	
 	@Autowired
 	private ChecklistService service;
+	
+	@Autowired
+	private AtivoService ativoService;
 	
 	@GetMapping
 	public ResponseEntity<List<Checklist>> findAll(){
@@ -153,7 +156,7 @@ public class ChecklistResource {
 	        return ResponseEntity.status(500).build();
 	    }
 	}
-
+	//Regi paia
 	@GetMapping("/download")
 	public ResponseEntity<Resource> downloadFile(
 	    @RequestParam Long ativo_id, 
@@ -190,7 +193,21 @@ public class ChecklistResource {
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.add(HttpHeaders.CONTENT_TYPE, mimeType != null ? mimeType : MediaType.APPLICATION_OCTET_STREAM_VALUE);
 	    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + checklist.getNome() + "_" + fileType + "." + fileExtension + "\"");
-
+	    
+	    
+	    Ativo ativo = new Ativo();
+	    
+	    ativo = ativoService.findById(ativo_id);
+	    if(ativo.getDownload() == null) {
+	    	ativo.setDownload(1);
+	    }else{
+	    	Integer down = ativo.getDownload();
+	    	down += 1;
+	    	ativo.setDownload(down);
+	    }
+	    
+	    ativo = ativoService.update(ativo_id, ativo);
+	    
 	    return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 
