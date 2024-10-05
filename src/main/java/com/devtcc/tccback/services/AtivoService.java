@@ -49,6 +49,25 @@ public class AtivoService {
 		return usuario.get();
 	}
 	
+	public List<Ativo> findByUsuario(Long fk_usuario_id){
+		List<Ativo> ativos = repo.findByUsuarioId(fk_usuario_id);
+		List<Ativo> retorno = new ArrayList<>();
+		for (Ativo ativo : ativos) {
+			Ativo ativoR =  new Ativo();
+			ativoR.setId(ativo.getId());
+			ativoR.setNome(ativo.getNome());
+			ativoR.setDescricao(ativo.getDescricao());
+			ativoR.setDominio(ativo.getDominio());
+			ativoR.setTipo(ativo.getTipo());
+			ativoR.setDownload(ativo.getDownload());
+			ativoR.setValidacao(ativo.getValidacao());
+			ativoR.setVersao(ativo.getVersao());
+			retorno.add(ativoR);
+		}
+		
+		return retorno;
+	}
+	
 	public List<Ativo> findValidacaoFalse(){
 		List<Ativo> ativos = repo.findByValidacao(false);
 		List<Ativo> retorno = new ArrayList<>();
@@ -163,8 +182,5 @@ public class AtivoService {
 		}
 	}
 	
-	public List<Ativo> findByUsuario(Long id){
-		
-		return repo.findByUsuarioId(id);
-	}
+	
 }

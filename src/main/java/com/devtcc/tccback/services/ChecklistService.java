@@ -1,5 +1,6 @@
 package com.devtcc.tccback.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,17 +24,57 @@ public class ChecklistService {
 	private AtivoRepository ativoRepo;
 	
 	public List<Checklist> findAll(){
-		return repo.findAll();
+		List<Checklist> checklists = repo.findAll();
+		List<Checklist> retorno = new ArrayList<>();
+		for (Checklist checklist : checklists) {
+			Checklist checklistR =  new Checklist();
+			checklistR.setId(checklist.getId());
+			checklistR.setNome(checklist.getNome());
+			checklistR.setDominio(checklist.getDominio());
+			checklistR.setTeste(checklist.getTeste());
+			checklistR.setRefinamento(checklist.getRefinamento());
+			checklistR.setRevisao(checklist.getRevisao());
+			checklistR.setHomologacao(checklist.getHomologacao());
+			retorno.add(checklistR);
+		}
+		
+		return retorno;
 	}
 	
-	public Checklist findById(Long id){
-		Optional<Checklist> checklist = repo.findById(id);
-		return checklist.get();
+	public Checklist findById(Long id) {
+	    Optional<Checklist> optionalChecklist = repo.findById(id);
+	    if (optionalChecklist.isPresent()) {
+	        Checklist checklist = optionalChecklist.get();
+	        Checklist checklistR = new Checklist();
+	        checklistR.setId(checklist.getId());
+	        checklistR.setNome(checklist.getNome());
+	        checklistR.setDominio(checklist.getDominio());
+	        checklistR.setTeste(checklist.getTeste());
+	        checklistR.setRefinamento(checklist.getRefinamento());
+	        checklistR.setRevisao(checklist.getRevisao());
+	        checklistR.setHomologacao(checklist.getHomologacao());
+	        return checklistR;
+	    } else {
+	        return null; // ou lance uma exceção, se preferir
+	    }
 	}
-	
-	public Checklist findByAtivoId(Long ativo_id){
-		Optional<Checklist> checklist = repo.findByAtivoId(ativo_id);
-		return checklist.get();
+
+	public Checklist findByAtivoId(Long ativo_id) {
+	    Optional<Checklist> optionalChecklist = repo.findByAtivoId(ativo_id);
+	    if (optionalChecklist.isPresent()) {
+	        Checklist checklist = optionalChecklist.get();
+	        Checklist checklistR = new Checklist();
+	        checklistR.setId(checklist.getId());
+	        checklistR.setNome(checklist.getNome());
+	        checklistR.setDominio(checklist.getDominio());
+	        checklistR.setTeste(checklist.getTeste());
+	        checklistR.setRefinamento(checklist.getRefinamento());
+	        checklistR.setRevisao(checklist.getRevisao());
+	        checklistR.setHomologacao(checklist.getHomologacao());
+	        return checklistR;
+	    } else {
+	        return null; // ou lance uma exceção, se preferir
+	    }
 	}
 	
 	public Checklist insert(Checklist obj, Long id) {

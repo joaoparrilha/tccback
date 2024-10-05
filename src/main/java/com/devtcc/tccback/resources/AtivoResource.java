@@ -37,10 +37,10 @@ public class AtivoResource {
 	@Autowired
 	private AtivoService service;
 	
-	@GetMapping("/ativosById")
-	public ResponseEntity<List<Ativo>> findByUsuario(@RequestParam ("id") Long id){
-			
-		List<Ativo> ativos = service.findByUsuario(id);
+	
+	@GetMapping(value = "/usuario/{fk_usuario_id}")
+	public ResponseEntity<List<Ativo>> findByusuarioId(@PathVariable Long fk_usuario_id) {
+	 	List<Ativo> ativos = service.findByUsuario(fk_usuario_id);
 		return ResponseEntity.ok().body(ativos);
 	}
 	
@@ -68,13 +68,6 @@ public class AtivoResource {
 		return ResponseEntity.ok().body(list);
 	}
 	
-	//@PostMapping
-	//public ResponseEntity<Ativo> insert(@RequestBody Ativo obj){
-	//	obj = service.insert(obj);
-	//	URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-	//	return ResponseEntity.created(uri).body(obj);
-	//}
-	
 	@PostMapping(consumes = "multipart/form-data")
 	public ResponseEntity<Ativo> insert(
 	        @RequestParam(value = "nome", required = false) String nome,
@@ -94,13 +87,10 @@ public class AtivoResource {
 	    obj.setDownload(0);
 
 	    try {
-	        // Convert the 'versao' from String to Float
 	        obj.setVersao(Float.parseFloat(versao));
 
-	        // Set the file as byte array
 	        obj.setArquivo(file.getBytes());
 	        
-	        // Insert the object using the service
 	        obj = service.insert(obj, id);
 	        
 	        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -114,7 +104,6 @@ public class AtivoResource {
 	        return ResponseEntity.status(500).build();
 	    }
 	}
-
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id){

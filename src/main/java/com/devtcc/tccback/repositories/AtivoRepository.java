@@ -10,5 +10,5 @@ public interface AtivoRepository extends JpaRepository<Ativo, Long>{
 
 	List<Ativo> findByValidacao(Boolean validacao);
 	
-	List<Ativo> findByUsuarioId(Long id);
+	List<Ativo> findByUsuarioId(Long fk_usuario_id);
 }
