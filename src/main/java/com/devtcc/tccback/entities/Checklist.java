@@ -68,6 +68,26 @@ public class Checklist implements Serializable{
 		this.dochomo = dochomo;
 	}
 	
+	
+	
+	public Checklist(Long id, String nome, String dominio, Boolean revisao, Boolean refinamento, Boolean teste,
+			Boolean homologacao, byte[] docrefi, byte[] docteste, byte[] dochomo, List<Aprovadores> aprovadores,
+			Ativo ativo) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.dominio = dominio;
+		this.revisao = revisao;
+		this.refinamento = refinamento;
+		this.teste = teste;
+		this.homologacao = homologacao;
+		this.docrefi = docrefi;
+		this.docteste = docteste;
+		this.dochomo = dochomo;
+		this.aprovadores = aprovadores;
+		this.ativo = ativo;
+	}
+
 	public Long getId() {
 		return id;
 	}

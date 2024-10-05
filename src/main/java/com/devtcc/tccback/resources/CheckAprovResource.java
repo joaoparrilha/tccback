@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,12 @@ public class CheckAprovResource {
 	@GetMapping
 	public ResponseEntity<List<CheckAprov>> findAll(){
 		List<CheckAprov> list = service.findAll();
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<List<CheckAprov>> findByAprovId(@PathVariable Long id){
+		List<CheckAprov> list = service.findByAprovId(id);
 		return ResponseEntity.ok(list);
 	}
 	
@@ -74,7 +81,12 @@ public class CheckAprovResource {
 											  @RequestParam(value = "refinamento", required = false) Boolean refinamento,
 											  @RequestParam(value = "teste", required = false) Boolean teste,
 											  @RequestParam(value = "homologacao", required = false) Boolean homologacao){
+		
+		//Checklist check = new Checklist();
+		//check = checkService.findById(id);
+		
 		CheckAprov obj = new CheckAprov();
+		//obj.setChecklist(check);
 		obj.setRevisao(revisao);
 		obj.setRefinamento(refinamento);
 		obj.setTeste(teste);

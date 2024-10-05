@@ -77,12 +77,12 @@ public class AtivoResource {
 	
 	@PostMapping(consumes = "multipart/form-data")
 	public ResponseEntity<Ativo> insert(
-	        @RequestParam("nome") String nome,
-	        @RequestParam("dominio") String dominio,
-	        @RequestParam("descricao") String descricao,
-	        @RequestParam("tipo") String tipo,
-	        @RequestParam("versao") String versao,  // 'versao' will be converted to Float
-	        @RequestPart("arquivo") MultipartFile file,
+	        @RequestParam(value = "nome", required = false) String nome,
+	        @RequestParam(value = "dominio", required = false) String dominio,
+	        @RequestParam(value = "descricao", required = false) String descricao,
+	        @RequestParam(value = "tipo", required = false) String tipo,
+	        @RequestParam(value = "versao", required = false) String versao,  // 'versao' will be converted to Float
+	        @RequestPart(value = "arquivo", required = false) MultipartFile file,
 	        @RequestParam("fk_usuario_id") Long id) {
 
 	    Ativo obj = new Ativo();  // Assuming 'Ativo' has a default constructor
