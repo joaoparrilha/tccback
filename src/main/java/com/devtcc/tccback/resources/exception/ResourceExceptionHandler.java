@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.devtcc.tccback.services.exception.AtivoUpdateException;
+import com.devtcc.tccback.services.exception.DoubleRegisterException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -21,5 +22,13 @@ public class ResourceExceptionHandler {
 		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 				
+	}
+	
+	@ExceptionHandler(DoubleRegisterException.class)
+	public ResponseEntity<StandardError> doubleRegisterException(DoubleRegisterException e, HttpServletRequest request){
+		String error = "Checklist já aderido ao aprovador.";
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
 	}
 }

@@ -15,6 +15,7 @@ import com.devtcc.tccback.repositories.CheckAprovRepository;
 import com.devtcc.tccback.repositories.ChecklistRepository;
 import com.devtcc.tccback.repositories.UsuarioRepository;
 import com.devtcc.tccback.services.exception.AtivoUpdateException;
+import com.devtcc.tccback.services.exception.DoubleRegisterException;
 
 @Service
 public class CheckAprovService {
@@ -57,7 +58,7 @@ public class CheckAprovService {
 			if(!(obj.getAprovador().getId()== check.getAprovador().getId()) && !(obj.getChecklist().getId() == check.getChecklist().getId())) {
 				objInsert = repo.save(obj);
 			}else{			
-				throw new RuntimeException("Checklist já aderido ao aprovador");
+				throw new DoubleRegisterException();
 			}
 		}		
 		return obj;
