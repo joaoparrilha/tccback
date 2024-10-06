@@ -48,7 +48,19 @@ public class CheckAprovService {
 	}
 	
 	public CheckAprov insert(CheckAprov obj){
-		return repo.save(obj);
+		
+		List<CheckAprov> list = repo.findByAprovadores_Id(obj.getAprovador().getId());
+		CheckAprov objInsert = new CheckAprov(); 
+		objInsert = obj;
+		
+		for(CheckAprov check : list) {
+			if(!(obj.getAprovador().getId()== check.getAprovador().getId()) && !(obj.getChecklist().getId() == check.getChecklist().getId())) {
+				objInsert = repo.save(obj);
+			}else{			
+				throw new RuntimeException("Checklist já aderido ao aprovador");
+			}
+		}		
+		return obj;
 	}
 	
 	public void delete(Long id) {
