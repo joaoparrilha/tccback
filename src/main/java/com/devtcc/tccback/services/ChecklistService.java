@@ -98,7 +98,8 @@ public class ChecklistService {
 		Optional<Checklist> opCheck = repo.findById(id);
 	    Checklist entity = opCheck.get();
 
-	    Optional<Ativo> opAtivo = ativoRepo.findById(entity.getAtivo().getId());
+	    Long idAtivo = entity.getAtivo().getId();
+	    Optional<Ativo> opAtivo = ativoRepo.findById(idAtivo);
 	    Ativo ativo = opAtivo.get();
 	    
 	    updateData(entity, obj);
@@ -109,9 +110,9 @@ public class ChecklistService {
 	    entity = repo.save(entity);
 	    
 	    if(entity.getDochomo() != null) {
-	    	ativo.setValidacao(true);
-	    	ativoRepo.save(ativo);
+	    	ativo.setValidacao(true);	    	
 	    }
+	    ativoRepo.save(ativo);
 	    
 	    return entityRet; 
 	}
