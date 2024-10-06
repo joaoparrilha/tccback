@@ -8,5 +8,5 @@ import com.devtcc.tccback.entities.Aprovadores;
 
 public interface AprovadoresRepository extends JpaRepository<Aprovadores, Long>{
 
-	Optional<Aprovadores> findByUsuarioId(Long id);
+	Optional<Aprovadores> findByUsuarioId(Long fk_usuario_id);
 }

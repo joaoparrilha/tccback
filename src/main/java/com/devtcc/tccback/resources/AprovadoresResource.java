@@ -39,6 +39,12 @@ public class AprovadoresResource {
 		return ResponseEntity.ok().body(aprovador);
 	}	
 	
+	@GetMapping(value = "/usuario/{fk_usuario_id}")
+	public ResponseEntity<Aprovadores> findByUsuarioId(@PathVariable Long fk_usuario_id){
+		Aprovadores aprovador = service.findByUsuarioId(fk_usuario_id);
+		return ResponseEntity.ok().body(aprovador);
+	}	
+	
 	@PostMapping
 	public ResponseEntity<Aprovadores> insert(@RequestBody Aprovadores obj){
 		obj = service.insert(obj);

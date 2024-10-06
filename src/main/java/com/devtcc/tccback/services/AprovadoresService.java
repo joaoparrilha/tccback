@@ -25,6 +25,12 @@ public class AprovadoresService {
 		return aprovador.get();
 	}
 	
+	public Aprovadores findByUsuarioId(Long fk_usuario_id){
+		Optional<Aprovadores> aprovador = repo.findByUsuarioId(fk_usuario_id);
+		return aprovador.get();
+	}
+	
+	
 	public Aprovadores insert(Aprovadores obj) {
 		return repo.save(obj);
 	}
