@@ -1,5 +1,6 @@
 package com.devtcc.tccback.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +45,29 @@ public class CheckAprovService {
 		return checkAprov.get();
 	}
 	
+//	public List<CheckAprov> findByAprovId(Long id){
+//		return repo.findByAprovadores_Id(id);
+//	}
+	
 	public List<CheckAprov> findByAprovId(Long id){
-		return repo.findByAprovadores_Id(id);
+		List<CheckAprov> checkAprovs = repo.findByAprovadores_Id(id);
+		List<CheckAprov> retorno = new ArrayList<>();
+		for (CheckAprov checkAprov : checkAprovs) {
+			CheckAprov checkAprovR =  new CheckAprov();
+			checkAprovR.setId(checkAprov.getId());
+			checkAprovR.setRevisao(checkAprov.getRevisao());
+			checkAprovR.setRefinamento(checkAprov.getRefinamento());
+			checkAprovR.setTeste(checkAprov.getTeste());
+			checkAprovR.setHomologacao(checkAprov.getHomologacao());
+			Checklist checklist = new Checklist();
+		      checklist.setId(checkAprov.getChecklist().getId());
+		      checklist.setNome(checkAprov.getChecklist().getNome());
+		      checkAprovR.setChecklist(checklist);
+		      
+			retorno.add(checkAprovR);
+		}
+		
+		return retorno;
 	}
 	
 	public CheckAprov insert(CheckAprov obj){
@@ -140,6 +162,10 @@ public class CheckAprovService {
 			entity.setId(obj.getId());
 		}
 		
+		if(obj.getRevisao() != null) {
+			entity.setRevisao(obj.getRevisao());
+		}
+		
 		if(obj.getHomologacao() != null) {
 			if(check.getTeste() ==  true) {
 				entity.setHomologacao(obj.getHomologacao());
@@ -164,8 +190,5 @@ public class CheckAprovService {
 			}
 		}
 		
-		if(obj.getRevisao() != null) {
-			entity.setRevisao(obj.getRevisao());
-		}
 	}
 }

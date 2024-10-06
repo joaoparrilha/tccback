@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -75,26 +76,21 @@ public class CheckAprovResource {
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
-	@PutMapping//(value = "/{id}")
-	public ResponseEntity<CheckAprov> update (@RequestParam(value = "id") Long id,
-											  @RequestParam(value = "revisao", required = false) Boolean revisao,
-											  @RequestParam(value = "refinamento", required = false) Boolean refinamento,
-											  @RequestParam(value = "teste", required = false) Boolean teste,
-											  @RequestParam(value = "homologacao", required = false) Boolean homologacao){
-		
-		//Checklist check = new Checklist();
-		//check = checkService.findById(id);
-		
-		CheckAprov obj = new CheckAprov();
-		//obj.setChecklist(check);
-		obj.setRevisao(revisao);
-		obj.setRefinamento(refinamento);
-		obj.setTeste(teste);
-		obj.setHomologacao(homologacao);
-		
-		obj = service.update(id, obj);
-		return ResponseEntity.ok().body(obj);
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<CheckAprov> update(
+	    @PathVariable Long id,
+	    @RequestBody CheckAprov checkAprov) {
+
+	    CheckAprov obj = service.findById(id);
+	    if (checkAprov.getRevisao() != null) obj.setRevisao(checkAprov.getRevisao());
+	    if (checkAprov.getRefinamento() != null) obj.setRefinamento(checkAprov.getRefinamento());
+	    if (checkAprov.getTeste() != null) obj.setTeste(checkAprov.getTeste());
+	    if (checkAprov.getHomologacao() != null) obj.setHomologacao(checkAprov.getHomologacao());
+	    
+	    obj = service.update(id, obj);
+	    return ResponseEntity.ok().body(obj);
 	}
+
 	
 	@DeleteMapping
 	public ResponseEntity<Void>delete(@RequestParam(value = "id") Long id){

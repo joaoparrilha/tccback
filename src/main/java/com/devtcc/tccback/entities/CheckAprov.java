@@ -29,7 +29,6 @@ public class CheckAprov implements Serializable{
 
 	@ManyToOne
 	@JoinColumn(name = "checklist_id", referencedColumnName = "id")
-	@JsonIgnore
 	private Checklist checklist;
 
 	private Boolean revisao;
