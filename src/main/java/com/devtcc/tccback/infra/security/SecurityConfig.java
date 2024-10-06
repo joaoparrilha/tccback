@@ -65,6 +65,10 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/checkaprov").hasAnyRole("VALIDADOR", "ADMINISTRADOR")
                 .requestMatchers(HttpMethod.DELETE, "/checkaprov").hasAnyRole("VALIDADOR", "ADMINISTRADOR")
                 .requestMatchers(HttpMethod.GET, "/aprovador").permitAll()
+                .requestMatchers(HttpMethod.GET, "/suporte").permitAll()
+                .requestMatchers(HttpMethod.POST, "/suporte").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/suporte").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/suporte").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
