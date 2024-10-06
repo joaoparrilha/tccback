@@ -94,12 +94,26 @@ public class ChecklistService {
 	}
 	
 	public Checklist update(Long id, Checklist obj) {
-	    Checklist entity = repo.getReferenceById(id);
+		
+		Optional<Checklist> opCheck = repo.findById(id);
+	    Checklist entity = opCheck.get();
 
+	    Optional<Ativo> opAtivo = ativoRepo.findById(entity.getAtivo().getId());
+	    Ativo ativo = opAtivo.get();
+	    
 	    updateData(entity, obj);
 	    //updateData(entity, obj);
 	    
-	    return repo.save(entity); 
+	    Checklist entityRet = entity;
+	    
+	    entity = repo.save(entity);
+	    
+	    if(entity.getDochomo() != null) {
+	    	ativo.setValidacao(true);
+	    	ativoRepo.save(ativo);
+	    }
+	    
+	    return entityRet; 
 	}
 
 	private void updateData(Checklist entity, Checklist obj) {
@@ -116,48 +130,48 @@ public class ChecklistService {
 			entity.setDominio(obj.getDominio());
 		}
 		
-		if(entity.getTeste() == true) {
-			if(obj.getHomologacao() != null) {
+		if(obj.getHomologacao() != null) {
+			if(entity.getTeste() == true) {
 				entity.setHomologacao(obj.getHomologacao());
 			}else{
 				throw new AtivoUpdateException();
 			}
 		}
 		
-		if(entity.getTeste() == true) {
-			if(obj.getDochomo() != null) {
+		if(obj.getDochomo() != null) {
+			if(entity.getTeste() == true) {
 				entity.setDochomo(obj.getDochomo());
 			}else {
 				throw new AtivoUpdateException();
 			}
 		}
 		
-		if(entity.getRefinamento() == true) {
-			if(obj.getTeste() != null) {
+		if(obj.getTeste() != null) {
+			if(entity.getRefinamento() == true) {
 				entity.setTeste(obj.getTeste());
 			}else {
 				throw new AtivoUpdateException();
 			}
 		}
 		
-		if(entity.getRefinamento() == true) {
-			if(obj.getDocteste() != null){
+		if(obj.getDocteste() != null) {
+			if(entity.getRefinamento() == true){
 				entity.setDocteste(obj.getDocteste());
 			}else {
 				throw new AtivoUpdateException();
 			}
 		}
 		
-		if(entity.getRevisao() == true) {			
-			if(obj.getRefinamento() != null) {
+		if(obj.getRefinamento() != null) {			
+			if(entity.getRevisao() == true) {
 				entity.setRefinamento(obj.getRefinamento());
 			}else {
 				throw new AtivoUpdateException();
 			}
 		}
 		
-		if(entity.getRevisao() == true) {
-			if(obj.getDocrefi() != null) {
+		if(obj.getDocrefi() != null) {
+			if(entity.getRevisao() == true) {
 				entity.setDocrefi(obj.getDocrefi());
 			}else {
 				throw new AtivoUpdateException();
