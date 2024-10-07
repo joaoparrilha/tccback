@@ -111,12 +111,54 @@ public class AtivoResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<Ativo> update(@PathVariable Long id, @RequestBody Ativo obj){
-		obj = service.update(id, obj);
-		return ResponseEntity.ok().body(obj);
-	}
+//	@PutMapping(value = "/{id}")
+//	public ResponseEntity<Ativo> update(@PathVariable Long id, @RequestBody Ativo obj){
+//		obj = service.update(id, obj);
+//		return ResponseEntity.ok().body(obj);
+//	}
 	
+	
+	@PutMapping(value = "/{id}", consumes = "multipart/form-data")
+	public ResponseEntity<Ativo> update(
+	        @PathVariable Long id,
+	        @RequestParam(value = "nome", required = false) String nome,
+	        @RequestParam(value = "dominio", required = false) String dominio,
+	        @RequestParam(value = "descricao", required = false) String descricao,
+	        @RequestParam(value = "tipo", required = false) String tipo,
+	        @RequestParam(value = "versao", required = false) String versao,
+	        @RequestPart(value = "arquivo", required = false) MultipartFile file) {
+
+	    Ativo obj = service.findById(id); // Busca o objeto existente pelo ID
+	    if (obj == null) {
+	        return ResponseEntity.notFound().build(); // Retorna 404 se não encontrado
+	    }
+
+	    // Atualiza os campos do objeto com os dados recebidos
+	    obj.setNome(nome);
+	    obj.setDominio(dominio);
+	    obj.setDescricao(descricao);
+	    obj.setTipo(tipo);
+	    obj.setValidacao(false);
+	    obj.setDownload(0); // Mantenha essa lógica como desejar
+
+	    try {
+	        if (versao != null) {
+	            obj.setVersao(Float.parseFloat(versao));
+	        }
+
+	        if (file != null && !file.isEmpty()) {
+	            obj.setArquivo(file.getBytes()); // Armazena o arquivo
+	        }
+
+	        obj = service.update(id, obj); // Atualiza o objeto no banco de dados
+	        return ResponseEntity.ok().body(obj); // Retorna o objeto atualizado
+	    } catch (NumberFormatException e) {
+	        return ResponseEntity.badRequest().body(null); // Retorna erro 400 para número inválido
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return ResponseEntity.status(500).build(); // Retorna erro 500 em caso de falha de IO
+	    }
+	}
 	@GetMapping("/download")
 	public ResponseEntity<Resource> downloadFile(@RequestParam Long id) {
 	    Ativo ativo = service.findById(id);

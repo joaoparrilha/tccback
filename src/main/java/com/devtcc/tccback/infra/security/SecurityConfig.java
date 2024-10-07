@@ -62,6 +62,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/avaliacao").permitAll()
                 .requestMatchers(HttpMethod.GET, "/checkaprov").hasAnyRole("VALIDADOR", "ADMINISTRADOR")
                 .requestMatchers(HttpMethod.POST, "/checkaprov").hasAnyRole("VALIDADOR", "ADMINISTRADOR")
+                .requestMatchers(HttpMethod.POST, "/checkaprov/*").hasAnyRole("VALIDADOR", "ADMINISTRADOR")
                 .requestMatchers(HttpMethod.PUT, "/checkaprov").hasAnyRole("VALIDADOR", "ADMINISTRADOR")
                 .requestMatchers(HttpMethod.DELETE, "/checkaprov").hasAnyRole("VALIDADOR", "ADMINISTRADOR")
                 .requestMatchers(HttpMethod.GET, "/aprovador").permitAll()

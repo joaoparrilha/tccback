@@ -77,10 +77,10 @@ public class CheckAprovService {
 		objInsert = obj;
 		
 		for(CheckAprov check : list) {
-			if(!(obj.getAprovador().getId()== check.getAprovador().getId()) && !(obj.getChecklist().getId() == check.getChecklist().getId())) {
-				objInsert = repo.save(obj);
-			}else{			
+			if((obj.getAprovador().getId() == check.getAprovador().getId()) && (obj.getChecklist().getId() == check.getChecklist().getId())) {
 				throw new DoubleRegisterException();
+			}else{			
+				objInsert = repo.save(obj);
 			}
 		}		
 		return obj;
