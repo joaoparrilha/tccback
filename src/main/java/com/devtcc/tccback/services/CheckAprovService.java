@@ -168,28 +168,31 @@ public class CheckAprovService {
 				entity.setRevisao(obj.getRevisao());
 			}
 			
-			if(obj.getHomologacao() != null) {
+			if(obj.getHomologacao() != null && obj.getHomologacao() != false) {
 				if(check.getTeste() ==  true) {
 					entity.setHomologacao(obj.getHomologacao());
 				}else {
+					System.out.println("caiu na homologacao");
 					entity.setHomologacao(false);
 					throw new AtivoUpdateException();
 				}
 			}
 			
-			if(obj.getTeste() != null) {
+			if(obj.getTeste() != null && obj.getTeste() != false) {
 				if(check.getRefinamento() == true) {
 					entity.setTeste(obj.getTeste());
 				}else {
+					System.out.println("caiu no teste");
 					entity.setTeste(false);
 					throw new AtivoUpdateException();
 				}
 			}
 					
-			if(obj.getRefinamento() != null) {
+			if(obj.getRefinamento() != null && obj.getRefinamento() != false) {
 				if(check.getRevisao() == true) {
 					entity.setRefinamento(obj.getRefinamento());
 				}else {
+					System.out.println("caiu na refinamento");
 					entity.setRefinamento(false);
 					throw new AtivoUpdateException();
 				}
