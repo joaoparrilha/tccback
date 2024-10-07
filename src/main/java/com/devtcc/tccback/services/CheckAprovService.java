@@ -79,11 +79,11 @@ public class CheckAprovService {
 		for(CheckAprov check : list) {
 			if((objInsert.getAprovador().getId() == check.getAprovador().getId()) && (objInsert.getChecklist().getId() == check.getChecklist().getId())) {
 				throw new DoubleRegisterException();
-			}else if((objInsert.getAprovador().getId() != check.getAprovador().getId()) && (objInsert.getChecklist().getId() != check.getChecklist().getId())){			
+			}/*else if((objInsert.getChecklist().getId() != check.getChecklist().getId())){			
 				objInsert = repo.save(objInsert);
-			}
+			}*/
 		}		
-		return obj;
+		return objInsert = repo.save(objInsert);
 	}
 	
 	public void delete(Long id) {
