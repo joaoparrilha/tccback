@@ -151,40 +151,51 @@ public class CheckAprovService {
 	
 	public void updateData(CheckAprov entity, CheckAprov obj) {
 		
-		CheckAprov checkAprov = repo.getReferenceById(entity.getId());
+		Optional<CheckAprov> opCheckAprov = repo.findById(entity.getId());
+		CheckAprov checkAprov = opCheckAprov.get();
 		//CheckAprov opCheckAprov = repo.getReferenceById(entity.getId());
 		Long id = checkAprov.getChecklist().getId();
 		
 		Optional<Checklist> opCheck = repoCheck.findById(id);
 		Checklist check = opCheck.get();
 		
-		if(obj.getId() != null) {
-			entity.setId(obj.getId());
-		}
 		
-		if(obj.getRevisao() != null) {
-			entity.setRevisao(obj.getRevisao());
-		}
-		
-		if(obj.getHomologacao() != null) {
-			if(check.getTeste() ==  true) {
-				entity.setHomologacao(obj.getHomologacao());
-			}else {
-				throw new AtivoUpdateException();
+			if(obj.getId() != null) {
+				entity.setId(obj.getId());
 			}
-		}
-		
-		if(obj.getTeste() != null) {
-			if(check.getRefinamento() == true) {
-				entity.setTeste(obj.getTeste());
-			}else {
-				throw new AtivoUpdateException();
+			
+			if(obj.getRevisao() != null) {
+				entity.setRevisao(obj.getRevisao());
 			}
-		}
-				
-		if(obj.getRefinamento() != null) {
-				entity.setRefinamento(obj.getRefinamento());
-		}
+			
+			if(obj.getHomologacao() != null) {
+				if(check.getTeste() ==  true) {
+					entity.setHomologacao(obj.getHomologacao());
+				}else {
+					entity.setHomologacao(false);
+					throw new AtivoUpdateException();
+				}
+			}
+			
+			if(obj.getTeste() != null) {
+				if(check.getRefinamento() == true) {
+					entity.setTeste(obj.getTeste());
+				}else {
+					entity.setTeste(false);
+					throw new AtivoUpdateException();
+				}
+			}
+					
+			if(obj.getRefinamento() != null) {
+				if(check.getRevisao() == true) {
+					entity.setRefinamento(obj.getRefinamento());
+				}else {
+					entity.setRefinamento(false);
+					throw new AtivoUpdateException();
+				}
+					
+			}
+		
 		
 	}
 }

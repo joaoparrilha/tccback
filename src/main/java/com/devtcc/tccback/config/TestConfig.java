@@ -100,7 +100,7 @@ public class TestConfig implements CommandLineRunner{
 		
 		
 		//Ativo
-		Path path = Paths.get("C:\\Users\\jlpar\\Downloads\\POLIWEEK_2024_Dec_Estudante.pdf");
+		/*Path path = Paths.get("C:\\Users\\jlpar\\Downloads\\POLIWEEK_2024_Dec_Estudante.pdf");
 		byte[] arquivoBytes = Files.readAllBytes(path);
 		Ativo ati1 = new Ativo(null, "teste01", "desc teste01", "proativo", "teste01", new Date(), 1.0f, 0, false, arquivoBytes, u1);
 		Ativo ati2 = new Ativo(null, "teste02", "desc teste02", "incremental", "teste02", new Date(), 1.0f, 0, false, arquivoBytes, u2);
@@ -118,11 +118,14 @@ public class TestConfig implements CommandLineRunner{
 		Ativo ati14 = new Ativo(null, "teste14", "desc teste14", "iterativo", "teste14", new Date(), 1.0f, 0, false, arquivoBytes, u14);
 		Ativo ati15 = new Ativo(null, "teste15", "desc teste15", "incremental", "teste15", new Date(), 1.0f, 0, false, arquivoBytes, u15);
 		
-		ativoRepo.saveAll(Arrays.asList(ati1, ati2, ati3));
+		ativoRepo.saveAll(Arrays.asList(ati1, ati2, ati3));*/
+		
+		//Optional<Ativo> opAti5 = ativoRepo.findById(5L);
+		//Ativo ati5 = opAti5.get();
 		
 		//Aprovadores
 		
-		Aprovadores apro1 = new Aprovadores(null, "Joao Parrilha", u1);
+		/*Aprovadores apro1 = new Aprovadores(null, "Joao Parrilha", u1);
 		Aprovadores apro2 = new Aprovadores(null, "Pedro Krassuski", u2);
 		Aprovadores apro3 = new Aprovadores(null, "Felipe Reginato", u3);
 		Aprovadores apro4 = new Aprovadores(null, "isabela", u4);
@@ -133,21 +136,36 @@ public class TestConfig implements CommandLineRunner{
 		Aprovadores apro9 = new Aprovadores(null, "alexandre", u9);
 		Aprovadores apro10 = new Aprovadores(null, "gustavo mattos", u10);
 		
-		aprovRepo.saveAll(Arrays.asList(apro1, apro2, apro3, apro4, apro5, apro6, apro7, apro8, apro9, apro10));
+		aprovRepo.saveAll(Arrays.asList(apro1, apro2, apro3, apro4, apro5, apro6, apro7, apro8, apro9, apro10));*/
+		
+		/*Optional<Aprovadores> aprov01 = aprovRepo.findById(1L);
+		Optional<Aprovadores> aprov02 = aprovRepo.findById(2L);
+		Optional<Aprovadores> aprov03 = aprovRepo.findById(3L);
+		Optional<Aprovadores> aprov04 = aprovRepo.findById(4L);
+		Optional<Aprovadores> aprov05 = aprovRepo.findById(5L);
+		
+		Aprovadores a01 = aprov01.get();
+		Aprovadores a02 = aprov02.get();
+		Aprovadores a03 = aprov03.get();
+		Aprovadores a04 = aprov04.get();
+		Aprovadores a05 = aprov05.get();*/
 		
 		//Checklist
 		
-		Checklist check1 = new Checklist(null, "teste01", "teste dom01", false, false, false, false, arquivoBytes, arquivoBytes, arquivoBytes);
+		/*Checklist check1 = new Checklist(null, "teste01", "teste dom01", false, false, false, false, arquivoBytes, arquivoBytes, arquivoBytes);
 		Checklist check2 = new Checklist(null, "teste02", "teste dom02", false, false, false, false, arquivoBytes, arquivoBytes, arquivoBytes);
 		Checklist check3 = new Checklist(null, "teste03", "teste dom03", false, false, false, false, arquivoBytes, arquivoBytes, arquivoBytes);
 		Checklist check4 = new Checklist(null, "teste04", "teste dom04", false, false, false, false, arquivoBytes, arquivoBytes, arquivoBytes);
 		Checklist check5 = new Checklist(null, "teste05", "teste dom05", false, false, false, false, arquivoBytes, arquivoBytes, arquivoBytes);
 		
-		checkRepo.saveAll(Arrays.asList(check1, check2, check3, check4, check5));
+		checkRepo.saveAll(Arrays.asList(check1, check2, check3, check4, check5));*/
+		
+		/*Optional<Checklist> opCheck07 = checkRepo.findById(7L);
+		Checklist chck07 = opCheck07.get();*/
 		
 		//CheckAprov
 		
-		//Check1
+		/*//Check1
 		CheckAprov checkAprov1 = new CheckAprov(null, apro1, check1, false, false, false, false);
 		CheckAprov checkAprov2 = new CheckAprov(null, apro2, check1, false, false, false, false);
 		CheckAprov checkAprov3 = new CheckAprov(null, apro3, check1, false, false, false, false);
@@ -161,11 +179,18 @@ public class TestConfig implements CommandLineRunner{
 		CheckAprov checkAprov9 = new CheckAprov(null, apro5, check2, false, false, false, false);
 		CheckAprov checkAprov10 = new CheckAprov(null, apro5, check2, false, false, false, false);
 		
-		checkAprovRepo.saveAll(Arrays.asList(checkAprov1, checkAprov2, checkAprov3, checkAprov4, checkAprov5, checkAprov6, checkAprov7, checkAprov8, checkAprov9, checkAprov10));
+		checkAprovRepo.saveAll(Arrays.asList(checkAprov1, checkAprov2, checkAprov3, checkAprov4, checkAprov5, checkAprov6, checkAprov7, checkAprov8, checkAprov9, checkAprov10));*/
+		/*CheckAprov checkAprov6 = new CheckAprov(null, a01, chck07, false, false, false, false);
+		CheckAprov checkAprov7 = new CheckAprov(null, a02, chck07, false, false, false, false);
+		CheckAprov checkAprov8 = new CheckAprov(null, a03, chck07, false, false, false, false);
+		CheckAprov checkAprov9 = new CheckAprov(null, a04, chck07, false, false, false, false);
+		CheckAprov checkAprov10 = new CheckAprov(null, a05, chck07, false, false, false, false);
+		
+		checkAprovRepo.saveAll(Arrays.asList(checkAprov6, checkAprov7, checkAprov8, checkAprov9, checkAprov10));*/
 		
 		//Avaliacao
 		//Ativo1
-		Avaliacao av1 = new Avaliacao(null, 5, "otimo", u15, ati1);
+		/*Avaliacao av1 = new Avaliacao(null, 5, "otimo", u15, ati1);
 		Avaliacao av2 = new Avaliacao(null, 3, "bom", u10, ati1);
 		Avaliacao av3 = new Avaliacao(null, 1, "ruim", u8, ati1);
 		

@@ -82,6 +82,7 @@ public class CheckAprovResource {
 	    @RequestBody CheckAprov checkAprov) {
 
 	    CheckAprov obj = service.findById(id);
+	    if (checkAprov.getId() != null) obj.setId(checkAprov.getId());
 	    if (checkAprov.getRevisao() != null) obj.setRevisao(checkAprov.getRevisao());
 	    if (checkAprov.getRefinamento() != null) obj.setRefinamento(checkAprov.getRefinamento());
 	    if (checkAprov.getTeste() != null) obj.setTeste(checkAprov.getTeste());

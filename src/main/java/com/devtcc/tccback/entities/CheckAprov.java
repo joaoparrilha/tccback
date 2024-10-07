@@ -23,6 +23,7 @@ public class CheckAprov implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "aprovadores_id", referencedColumnName = "id")
 	private Aprovadores aprovadores;
