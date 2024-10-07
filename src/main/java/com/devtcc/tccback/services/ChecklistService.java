@@ -7,11 +7,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.devtcc.tccback.entities.Aprovadores;
 import com.devtcc.tccback.entities.Ativo;
+import com.devtcc.tccback.entities.CheckAprov;
 import com.devtcc.tccback.entities.Checklist;
 import com.devtcc.tccback.entities.Usuario;
+import com.devtcc.tccback.repositories.AprovadoresRepository;
 import com.devtcc.tccback.repositories.AtivoRepository;
+import com.devtcc.tccback.repositories.CheckAprovRepository;
 import com.devtcc.tccback.repositories.ChecklistRepository;
+import com.devtcc.tccback.repositories.UsuarioRepository;
 import com.devtcc.tccback.services.exception.AtivoUpdateException;
 
 @Service
@@ -22,6 +27,18 @@ public class ChecklistService {
 	
 	@Autowired
 	private AtivoRepository ativoRepo;
+	
+	@Autowired
+	private CheckAprovRepository checkAprovRepo;
+	
+	@Autowired
+	private UsuarioRepository userRepo;
+	
+	@Autowired
+	private AprovadoresRepository aprovRepo;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	public List<Checklist> findAll(){
 		List<Checklist> checklists = repo.findAll();
@@ -105,6 +122,9 @@ public class ChecklistService {
 	    Optional<Ativo> opAtivo = ativoRepo.findById(idAtivo);
 	    Ativo ativo = opAtivo.get();
 	    
+	    
+	    
+	    
 	    updateData(entity, obj);
 	    //updateData(entity, obj);
 	    
@@ -113,7 +133,11 @@ public class ChecklistService {
 	    entity = repo.save(entity);
 	    
 	    if(entity.getDochomo() != null) {
-	    	ativo.setValidacao(true);	    	
+	    	ativo.setValidacao(true);
+	    	Optional<Usuario> opUsuario = userRepo.findById(ativo.getUsuario().getId());
+	    	Usuario usuario = opUsuario.get();
+	    		    	
+	    	emailService.sendApproveEmail(usuario.getEmail(), idAtivo);
 	    }
 	    ativoRepo.save(ativo);
 	    

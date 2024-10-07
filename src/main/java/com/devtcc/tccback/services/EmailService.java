@@ -1,5 +1,7 @@
 package com.devtcc.tccback.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -24,5 +26,16 @@ public class EmailService {
 		
 		mailSender.send(message);
 	}
+	
+	public void sendApproveEmail(String email, Long idAtivo){
+		
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(email);
+		message.setSubject("Ativo Aprovado!");
+		message.setText("O ativo " + idAtivo + " foi validado e se encontra público!");
+			
+		mailSender.send(message);
+	}
+
 
 }
