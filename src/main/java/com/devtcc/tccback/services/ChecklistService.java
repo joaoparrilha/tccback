@@ -71,6 +71,9 @@ public class ChecklistService {
 	        checklistR.setRefinamento(checklist.getRefinamento());
 	        checklistR.setRevisao(checklist.getRevisao());
 	        checklistR.setHomologacao(checklist.getHomologacao());
+	        checklistR.setDocrefi(checklist.getDocrefi());
+	        checklistR.setDocteste(checklist.getDocteste());
+	        checklistR.setDochomo(checklist.getDochomo());
 	        return checklistR;
 	    } else {
 	        return null; // ou lance uma exceção, se preferir
