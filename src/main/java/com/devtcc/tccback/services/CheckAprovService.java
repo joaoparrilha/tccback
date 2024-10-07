@@ -101,6 +101,11 @@ public class CheckAprovService {
 		Optional<Checklist> opCheck = repoCheck.findById(idChecklist);
 		Checklist checkObj = opCheck.get();
 		
+		Long idAtivo = checkObj.getAtivo().getId();
+		
+		Optional<Ativo> opAtivo = repoAtivo.findById(idAtivo);
+		Ativo ativo = opAtivo.get();
+		
 		//Optional<Ativo> opAtivo = repoAtivo.findById(idChecklist);
 		//Ativo ativo = opAtivo.get();
 		
@@ -136,7 +141,11 @@ public class CheckAprovService {
 				if(countHomologacao >= 4) {
 					checkObj.setHomologacao(true);
 				}
-			}
+			}/*if(checkObj.getDochomo() != null) {
+		    	ativo.setValidacao(true);
+		    	ativoRepo.save(ativo);
+		    }*/
+		    
 		}		
 		checkObj = repoCheck.save(checkObj);
 		
