@@ -183,11 +183,7 @@ public class CheckAprovService {
 		}
 				
 		if(obj.getRefinamento() != null) {
-			if(check.getRevisao() == true) {
 				entity.setRefinamento(obj.getRefinamento());
-			}else {
-				throw new AtivoUpdateException();
-			}
 		}
 		
 	}
