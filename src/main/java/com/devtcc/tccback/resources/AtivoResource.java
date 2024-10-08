@@ -74,7 +74,8 @@ public class AtivoResource {
 	        @RequestParam(value = "dominio", required = false) String dominio,
 	        @RequestParam(value = "descricao", required = false) String descricao,
 	        @RequestParam(value = "tipo", required = false) String tipo,
-	        @RequestParam(value = "versao", required = false) String versao,  // 'versao' will be converted to Float
+	        @RequestParam(value = "versao", required = false) String versao,
+	        @RequestParam(value = "dependencia", required = false) String dependencia,
 	        @RequestPart(value = "arquivo", required = false) MultipartFile file,
 	        @RequestParam("fk_usuario_id") Long id) {
 
@@ -84,6 +85,7 @@ public class AtivoResource {
 	    obj.setDescricao(descricao);
 	    obj.setTipo(tipo);
 	    obj.setValidacao(false);
+	    obj.setDependencia(dependencia);
 	    obj.setDownload(0);
 
 	    try {
@@ -126,6 +128,7 @@ public class AtivoResource {
 	        @RequestParam(value = "descricao", required = false) String descricao,
 	        @RequestParam(value = "tipo", required = false) String tipo,
 	        @RequestParam(value = "versao", required = false) String versao,
+	        @RequestParam(value = "dependencia", required = false) String dependencia,
 	        @RequestPart(value = "arquivo", required = false) MultipartFile file) {
 
 	    Ativo obj = service.findById(id); // Busca o objeto existente pelo ID
@@ -140,7 +143,8 @@ public class AtivoResource {
 	    obj.setTipo(tipo);
 	    obj.setValidacao(false);
 	    obj.setDownload(0); // Mantenha essa lógica como desejar
-
+	    obj.setDependencia(dependencia);
+	    
 	    try {
 	        if (versao != null) {
 	            obj.setVersao(Float.parseFloat(versao));

@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,8 +20,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table
@@ -52,11 +50,14 @@ public class Ativo implements Serializable{
 	@JoinColumn(name = "fk_usuario_id")
 	private Usuario usuario;
 	
+	@JsonIgnore
 	@OneToOne(mappedBy = "ativo", cascade = CascadeType.ALL)
 	private Checklist checklist;
 	
 	@OneToMany(mappedBy = "ativo")
 	private List<Avaliacao> avaliacao = new ArrayList<>();
+	
+	private String dependencia;
 	
 	public Ativo() {
 		
@@ -95,6 +96,26 @@ public class Ativo implements Serializable{
 		this.usuario = usuario;
 		this.checklist = checklist;
 		this.avaliacao = avaliacao;
+	}
+
+	public Ativo(Long id, String nome, String descricao, String tipo, String dominio, Date criado, Float versao,
+			Integer download, Boolean validacao, byte[] arquivo, Usuario usuario, Checklist checklist,
+			List<Avaliacao> avaliacao, String dependencia) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.descricao = descricao;
+		this.tipo = tipo;
+		this.dominio = dominio;
+		this.criado = criado;
+		this.versao = versao;
+		this.download = download;
+		this.validacao = validacao;
+		this.arquivo = arquivo;
+		this.usuario = usuario;
+		this.checklist = checklist;
+		this.avaliacao = avaliacao;
+		this.dependencia = dependencia;
 	}
 
 	public Long getId() {
@@ -208,6 +229,14 @@ public class Ativo implements Serializable{
 
 	public void setChecklist(Checklist checklist) {
 		this.checklist = checklist;
+	}		
+
+	public String getDependencia() {
+		return dependencia;
+	}
+
+	public void setDependencia(String dependencia) {
+		this.dependencia = dependencia;
 	}
 
 	@Override

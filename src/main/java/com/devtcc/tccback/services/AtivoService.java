@@ -37,6 +37,7 @@ public class AtivoService {
 			ativoR.setDownload(ativo.getDownload());
 			ativoR.setValidacao(ativo.getValidacao());
 			ativoR.setVersao(ativo.getVersao());
+			ativoR.setDependencia(ativo.getDependencia());
 			retorno.add(ativoR);
 		}
 		
@@ -62,6 +63,7 @@ public class AtivoService {
 			ativoR.setDownload(ativo.getDownload());
 			ativoR.setValidacao(ativo.getValidacao());
 			ativoR.setVersao(ativo.getVersao());
+			ativoR.setDependencia(ativo.getDependencia());
 			retorno.add(ativoR);
 		}
 		
@@ -80,6 +82,7 @@ public class AtivoService {
 			ativoR.setTipo(ativo.getTipo());
 			ativoR.setValidacao(ativo.getValidacao());
 			ativoR.setVersao(ativo.getVersao());
+			ativoR.setDependencia(ativo.getDependencia());
 			retorno.add(ativoR);
 		}
 		
@@ -99,6 +102,7 @@ public class AtivoService {
 			ativoR.setTipo(ativo.getTipo());
 			ativoR.setValidacao(ativo.getValidacao());
 			ativoR.setVersao(ativo.getVersao());
+			ativoR.setDependencia(ativo.getDependencia());
 			retorno.add(ativoR);
 		}
 		
@@ -179,6 +183,10 @@ public class AtivoService {
 		
 		if(obj.getUsuario() != null) {
 			entity.setUsuario(obj.getUsuario());
+		}
+		
+		if(obj.getDependencia() != null) {
+			entity.setDependencia(obj.getDependencia());
 		}
 	}
 	
